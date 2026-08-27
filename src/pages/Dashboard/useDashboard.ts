@@ -1,30 +1,38 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { api } from '../../services/api'
-import type { Deck } from './types'
+import type{ Deck } from './types'
 
 export const useDashboard = () => {
-  const [decks, setDecks] = useState<Deck[]>([])
+  const queryClient = useQueryClient()
   const [search, setSearch] = useState('')
-  const [loading, setLoading] = useState(true)
+  const [showModal, setShowModal] = useState(false)
 
-  useEffect(() => {
-    api.get('/decks')
-      .then(res => setDecks(res.data))
-      .catch(err => console.error('Error cargando mazos:', err))
-      .finally(() => setLoading(false))
-  }, [])
+  const { data: decks = [], isLoading } = useQuery<Deck[]>({
+    queryKey: ['decks'],
+    queryFn: () => api.get('/decks').then(res => res.data),
+  })
 
-  //TODO: Move this to backend
+  const deleteMutation = useMutation({
+    mutationFn: (id: number) => api.delete(`/decks/${id}`),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['decks'] }),
+  })
+
+//TODO: Move this to backend
   const filteredDecks = decks.filter(d =>
     d.name.toLowerCase().includes(search.toLowerCase())
   )
 
   const handleDelete = (id: number) => {
     if (!window.confirm('¿Eliminar este mazo?')) return
-    api.delete(`/decks/${id}`)
-      .then(() => setDecks(prev => prev.filter(d => d.id !== id)))
-      .catch(err => console.error('Error eliminando mazo:', err))
+    deleteMutation.mutate(id)
   }
 
- return { decks: filteredDecks, search, setSearch, loading, handleDelete }
+  return {
+    decks: filteredDecks,
+    search, setSearch,
+    loading: isLoading,
+    showModal, setShowModal,
+    handleDelete,
+  }
 }

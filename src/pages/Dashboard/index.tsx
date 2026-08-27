@@ -6,9 +6,18 @@ import { Card } from "../../components/Card";
 import { Toolbar, SearchWrapper, Title, Grid, EmptyState } from "./styles";
 import { useDashboard } from "./useDashboard";
 import { Loader } from "../../components/Loader";
+import { CreateDeckModal } from "../CreateDeckModal";
 
 export const Dashboard = () => {
-  const { decks, search, setSearch, loading, handleDelete } = useDashboard();
+  const {
+    decks,
+    search,
+    setSearch,
+    loading,
+    handleDelete,
+    showModal,
+    setShowModal,
+  } = useDashboard();
 
   if (loading)
     return (
@@ -29,7 +38,7 @@ export const Dashboard = () => {
             icon={<Search size={18} />}
           />
         </SearchWrapper>
-        <Button $variant="primary">
+        <Button $variant="primary" onClick={() => setShowModal(!showModal)}>
           <Plus size={18} /> Añadir mazo
         </Button>
       </Toolbar>
@@ -43,7 +52,7 @@ export const Dashboard = () => {
               name={deck.name}
               cardCount={deck.card_count}
               dueCount={deck.due_count}
-              onClick={() => console.log("Ver mazo", deck.id)}
+              onClick={() => console.log("entra en el mazo")}
               onDelete={() => handleDelete(deck.id)}
             />
           ))}
@@ -53,6 +62,7 @@ export const Dashboard = () => {
           <p>No hay mazos que coincidan con tu búsqueda</p>
         </EmptyState>
       )}
+      {showModal && <CreateDeckModal onClose={() => setShowModal(false)} />}
     </Layout>
   );
 };

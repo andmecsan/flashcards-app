@@ -16,6 +16,7 @@ export const Input = ({
   type = "text",
   error,
   icon,
+  registration,
 }: InputProps) => {
   return (
     <Wrapper>
@@ -26,9 +27,15 @@ export const Input = ({
           type={type}
           placeholder={placeholder}
           value={value}
-          onChange={(e) => onChange(e.target.value)}
           $hasIcon={!!icon}
           $hasError={!!error}
+          {...(registration
+            ? registration
+            : {
+                value,
+                onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+                  onChange?.(e.target.value),
+              })}
         />
       </InputWrapper>
       {error && <ErrorText>{error}</ErrorText>}

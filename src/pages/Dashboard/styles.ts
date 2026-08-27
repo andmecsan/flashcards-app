@@ -37,3 +37,9 @@ export const EmptyState = styled.div`
   font-family: ${({ theme }) => theme.fonts.main};
   font-size: 0.875rem;
 `
+
+export const ModalForm = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`
