@@ -21,33 +21,6 @@ export const Card = styled.div`
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
 `
 
-export const LogoWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 12px;
-`
-
-export const LogoIcon = styled.div`
-  width: 44px;
-  height: 44px;
-  border-radius: ${({ theme }) => theme.radii.md};
-  border: 2px solid ${({ theme }) => theme.colors.primary};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  font-weight: 700;
-  color: ${({ theme }) => theme.colors.primary};
-`
-
-export const LogoText = styled.h1`
-  font-family: ${({ theme }) => theme.fonts.main};
-  font-size: 28px;
-  font-weight: 800;
-  color: ${({ theme }) => theme.colors.text};
-  margin: 0;
-`
 
 export const Subtitle = styled.p`
   font-family: ${({ theme }) => theme.fonts.main};

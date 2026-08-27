@@ -1,3 +1,4 @@
+import { Logo } from "../../components/Logo";
 import {
   PageWrapper,
   Card,
@@ -20,11 +21,7 @@ export const Login = () => {
   return (
     <PageWrapper>
       <Card>
-        <LogoWrapper>
-          <LogoIcon>文</LogoIcon>
-          <LogoText>Flash Learn</LogoText>
-        </LogoWrapper>
-
+        <Logo height={48} />
         <Subtitle>
           Aprende con tarjetas inteligentes que se adaptan a tu ritmo
         </Subtitle>

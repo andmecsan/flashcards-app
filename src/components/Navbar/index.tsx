@@ -1,23 +1,12 @@
 import { BarChart3, Download, User } from "lucide-react";
-import {
-  Nav,
-  LogoWrapper,
-  LogoIcon,
-  LogoText,
-  NavActions,
-  NavButton,
-  Separator,
-} from "./styles";
+import { Nav, NavActions, NavButton, Separator } from "./styles";
+import { Logo } from "../Logo";
 
 export const Navbar = () => {
   return (
     <>
       <Nav>
-        <LogoWrapper>
-          <LogoIcon>文</LogoIcon>
-          <LogoText>Flash Learn</LogoText>
-        </LogoWrapper>
-
+        <Logo height={36} />
         <NavActions>
           <NavButton title="Estadísticas">
             <BarChart3 size={20} />

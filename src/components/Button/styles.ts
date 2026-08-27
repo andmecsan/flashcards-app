@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components'
-import { ButtonProps } from './types'
+import type { ButtonProps } from './types'
 
 const variants = {
   primary: css`
