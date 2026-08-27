@@ -7,6 +7,7 @@ import { Dashboard } from "./pages/Dashboard";
 import { AuthCallback } from "./pages/AuthCallback";
 import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { DeckDetail } from "./pages/DeckDetail";
 
 function App() {
   const queryClient = new QueryClient();
@@ -35,6 +36,10 @@ function App() {
             <Route
               path="/"
               element={token ? <Dashboard /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/decks/:id"
+              element={token ? <DeckDetail /> : <Navigate to="/login" />}
             />
           </Routes>
         </BrowserRouter>

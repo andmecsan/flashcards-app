@@ -7,6 +7,7 @@ import { Toolbar, SearchWrapper, Title, Grid, EmptyState } from "./styles";
 import { useDashboard } from "./useDashboard";
 import { Loader } from "../../components/Loader";
 import { CreateDeckModal } from "../CreateDeckModal";
+import { useNavigate } from "react-router-dom";
 
 export const Dashboard = () => {
   const {
@@ -18,6 +19,7 @@ export const Dashboard = () => {
     showModal,
     setShowModal,
   } = useDashboard();
+  const navigate = useNavigate();
 
   if (loading)
     return (
@@ -52,7 +54,7 @@ export const Dashboard = () => {
               name={deck.name}
               cardCount={deck.card_count}
               dueCount={deck.due_count}
-              onClick={() => console.log("entra en el mazo")}
+              onClick={() => navigate(`/decks/${deck.id}`)}
               onDelete={() => handleDelete(deck.id)}
             />
           ))}
