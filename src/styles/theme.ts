@@ -32,10 +32,10 @@ export const fonts = {
 } as const;
 
 export const radii = {
-  sm: '6px',
-  md: '10px',
-  lg: '16px',
-  full: '9999px',
+  sm: '0.375rem',
+  md: '0.625rem',
+  lg: '1rem',
+  full: '624.9375rem',
 } as const;
 
 export const theme = {

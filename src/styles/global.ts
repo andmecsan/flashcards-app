@@ -9,6 +9,10 @@ export const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
   }
 
+    html, body, #root {
+    height: 100%;
+  }
+
   body {
     font-family: ${({ theme }) => theme.fonts.main};
     background: ${({ theme }) => theme.colors.background};

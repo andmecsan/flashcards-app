@@ -2,9 +2,6 @@ import { Logo } from "../../components/Logo";
 import {
   PageWrapper,
   Card,
-  LogoWrapper,
-  LogoIcon,
-  LogoText,
   Subtitle,
   GoogleButton,
   GoogleIcon,
