@@ -48,3 +48,10 @@ export const StyledButton = styled.button<Pick<ButtonProps, '$variant' | '$size'
     cursor: not-allowed;
   }
 `
+
+export const Content = styled.span`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+`

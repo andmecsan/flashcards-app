@@ -1,4 +1,4 @@
-import { StyledButton } from "./styles";
+import { StyledButton, Content } from "./styles";
 import type { ButtonProps } from "./types";
 
 export const Button = ({
@@ -9,6 +9,7 @@ export const Button = ({
   onClick,
   disabled,
   type,
+  icon,
 }: ButtonProps) => {
   return (
     <StyledButton
@@ -19,7 +20,10 @@ export const Button = ({
       disabled={disabled}
       type={type}
     >
-      {children}
+      <Content>
+        {icon}
+        {children}
+      </Content>
     </StyledButton>
   );
 };

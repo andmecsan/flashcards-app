@@ -6,4 +6,5 @@ export interface ButtonProps {
   onClick?: () => void
   disabled?: boolean
   type?: 'button' | 'submit'
+  icon?: React.ReactNode
 }
