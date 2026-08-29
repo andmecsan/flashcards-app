@@ -1,8 +1,11 @@
 export interface CardProps {
-  id: number
-  name: string
-  cardCount: number
-  dueCount: number
-  onClick: () => void
-  onDelete: () => void
+  $variant?: 'default' | 'stacked'
+  title: string
+  subtitle?: string
+  badge?: string
+  icon?: React.ReactNode
+  children?: React.ReactNode
+  onClick?: () => void
+  onDelete?: () => void
+  onEdit?: () => void
 }

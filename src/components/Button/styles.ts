@@ -1,28 +1,67 @@
 import styled, { css } from 'styled-components'
 import type { ButtonProps } from './types'
 
-const variants = {
+const solidVariants = {
   primary: css`
     background: ${({ theme }) => theme.colors.primary};
-    color: white;
+    color: ${({ theme }) => theme.colors.surface};
     &:hover:not(:disabled) { background: ${({ theme }) => theme.colors.primaryHover}; }
   `,
   secondary: css`
     background: ${({ theme }) => theme.colors.accent};
-    color: white;
+    color: ${({ theme }) => theme.colors.surface};
     &:hover:not(:disabled) { background: ${({ theme }) => theme.colors.accentHover}; }
   `,
   danger: css`
     background: ${({ theme }) => theme.colors.danger};
-    color: white;
+    color: ${({ theme }) => theme.colors.surface};
     &:hover:not(:disabled) { background: ${({ theme }) => theme.colors.dangerHover}; }
+  `,
+  success: css`
+    background: ${({ theme }) => theme.colors.success};
+    color: ${({ theme }) => theme.colors.surface};
+    &:hover:not(:disabled) { background: ${({ theme }) => theme.colors.accentHover}; }
+  `,
+  warning: css`
+    background: ${({ theme }) => theme.colors.warning};
+    color: ${({ theme }) => theme.colors.surface};
+    &:hover:not(:disabled) { opacity: 0.9; }
   `,
   ghost: css`
     background: transparent;
     color: ${({ theme }) => theme.colors.text};
-    border: 0.0625rem solid ${({ theme }) => theme.colors.border};
+    border: 1px solid ${({ theme }) => theme.colors.border};
     &:hover:not(:disabled) { background: ${({ theme }) => theme.colors.background}; }
   `,
+}
+
+const softVariants = {
+  primary: css`
+    background: ${({ theme }) => theme.colors.primaryLight};
+    color: ${({ theme }) => theme.colors.primary};
+    &:hover:not(:disabled) { opacity: 0.8; }
+  `,
+  secondary: css`
+    background: ${({ theme }) => theme.colors.accentLight};
+    color: ${({ theme }) => theme.colors.accent};
+    &:hover:not(:disabled) { opacity: 0.8; }
+  `,
+  danger: css`
+    background: ${({ theme }) => theme.colors.dangerLight};
+    color: ${({ theme }) => theme.colors.danger};
+    &:hover:not(:disabled) { opacity: 0.8; }
+  `,
+  success: css`
+    background: ${({ theme }) => theme.colors.successLight};
+    color: ${({ theme }) => theme.colors.success};
+    &:hover:not(:disabled) { opacity: 0.8; }
+  `,
+  warning: css`
+    background: ${({ theme }) => theme.colors.warningLight};
+    color: ${({ theme }) => theme.colors.warning};
+    &:hover:not(:disabled) { opacity: 0.8; }
+  `,
+  ghost: css``,
 }
 
 const sizes = {
@@ -31,7 +70,7 @@ const sizes = {
   lg: css`padding: 0.875rem 1.75rem; font-size: 1rem;`,
 }
 
-export const StyledButton = styled.button<Pick<ButtonProps, '$variant' | '$size' | '$fullWidth'>>`
+export const StyledButton = styled.button<Pick<ButtonProps, '$variant' | '$size' | '$fullWidth' | '$soft'>>`
   border: none;
   border-radius: ${({ theme }) => theme.radii.md};
   font-family: ${({ theme }) => theme.fonts.main};
@@ -40,7 +79,7 @@ export const StyledButton = styled.button<Pick<ButtonProps, '$variant' | '$size'
   transition: all 0.15s ease;
   width: ${({ $fullWidth }) => $fullWidth ? '100%' : 'auto'};
 
-  ${({ $variant = 'primary' }) => variants[$variant]}
+  ${({ $variant = 'primary', $soft }) => $soft ? softVariants[$variant] : solidVariants[$variant]}
   ${({ $size = 'md' }) => sizes[$size]}
 
   &:disabled {

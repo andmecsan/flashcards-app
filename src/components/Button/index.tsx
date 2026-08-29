@@ -4,21 +4,19 @@ import type { ButtonProps } from "./types";
 export const Button = ({
   $variant,
   $size,
+  $soft,
   $fullWidth,
-  children,
-  onClick,
-  disabled,
-  type,
   icon,
+  children,
+  ...rest
 }: ButtonProps) => {
   return (
     <StyledButton
       $variant={$variant}
       $size={$size}
+      $soft={$soft}
       $fullWidth={$fullWidth}
-      onClick={onClick}
-      disabled={disabled}
-      type={type}
+      {...rest}
     >
       <Content>
         {icon}

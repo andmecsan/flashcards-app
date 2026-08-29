@@ -1,13 +1,14 @@
 import { Search, Plus } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Layout } from "../../components/Layout";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
 import { Card } from "../../components/Card";
-import { Toolbar, SearchWrapper, Title, Grid, EmptyState } from "./styles";
-import { useDashboard } from "./useDashboard";
 import { Loader } from "../../components/Loader";
+import { ConfirmModal } from "../../components/ConfirmModal";
 import { CreateDeckModal } from "../CreateDeckModal";
-import { useNavigate } from "react-router-dom";
+import { useDashboard } from "./useDashboard";
+import { Toolbar, SearchWrapper, Title, Grid, EmptyState } from "./styles";
 
 export const Dashboard = () => {
   const {
@@ -15,9 +16,12 @@ export const Dashboard = () => {
     search,
     setSearch,
     loading,
-    handleDelete,
     showModal,
     setShowModal,
+    deleteId,
+    setDeleteId,
+    handleDelete,
+    confirmDelete,
   } = useDashboard();
   const navigate = useNavigate();
 
@@ -40,8 +44,8 @@ export const Dashboard = () => {
             icon={<Search size={18} />}
           />
         </SearchWrapper>
-        <Button $variant="primary" onClick={() => setShowModal(!showModal)}>
-          <Plus size={18} /> Añadir mazo
+        <Button icon={<Plus size={18} />} onClick={() => setShowModal(true)}>
+          Añadir mazo
         </Button>
       </Toolbar>
 
@@ -50,10 +54,11 @@ export const Dashboard = () => {
           {decks.map((deck) => (
             <Card
               key={deck.id}
-              id={deck.id}
-              name={deck.name}
-              cardCount={deck.card_count}
-              dueCount={deck.due_count}
+              title={deck.name}
+              subtitle={`${deck.card_count} tarjetas`}
+              badge={
+                deck.due_count > 0 ? `${deck.due_count} pendientes` : undefined
+              }
               onClick={() => navigate(`/decks/${deck.id}`)}
               onDelete={() => handleDelete(deck.id)}
             />
@@ -61,10 +66,24 @@ export const Dashboard = () => {
         </Grid>
       ) : (
         <EmptyState>
-          <p>No hay mazos que coincidan con tu búsqueda</p>
+          <p>
+            {search
+              ? "No hay mazos que coincidan"
+              : "Aún no tienes mazos. ¡Crea el primero!"}
+          </p>
         </EmptyState>
       )}
+
       {showModal && <CreateDeckModal onClose={() => setShowModal(false)} />}
+
+      {deleteId && (
+        <ConfirmModal
+          title="Eliminar mazo"
+          message="¿Estás seguro? Se eliminarán todas las categorías y tarjetas de este mazo."
+          onConfirm={confirmDelete}
+          onClose={() => setDeleteId(null)}
+        />
+      )}
     </Layout>
   );
 };

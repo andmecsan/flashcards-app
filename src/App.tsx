@@ -8,6 +8,8 @@ import { AuthCallback } from "./pages/AuthCallback";
 import { useState } from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { DeckDetail } from "./pages/DeckDetail";
+import { CreateTopic } from "./pages/CreateTopic";
+import { Study } from "./pages/Study";
 
 function App() {
   const queryClient = new QueryClient();
@@ -40,6 +42,18 @@ function App() {
             <Route
               path="/decks/:id"
               element={token ? <DeckDetail /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/decks/:deckId/new-topic"
+              element={token ? <CreateTopic /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/categories/:categoryId/edit"
+              element={token ? <CreateTopic /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/study/:deckId"
+              element={token ? <Study /> : <Navigate to="/login" />}
             />
           </Routes>
         </BrowserRouter>

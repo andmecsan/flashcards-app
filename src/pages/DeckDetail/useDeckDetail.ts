@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { api } from '../../services/api'
-import type{ Category } from './types'
+import type { Category } from './types'
 import type { Deck } from '../Dashboard/types'
 
 export const useDeckDetail = () => {
@@ -10,7 +10,7 @@ export const useDeckDetail = () => {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const [search, setSearch] = useState('')
-  const [showModal, setShowModal] = useState(false)
+  const [deleteId, setDeleteId] = useState<number | null>(null)
 
   const { data: deck } = useQuery<Deck>({
     queryKey: ['deck', id],
@@ -24,7 +24,10 @@ export const useDeckDetail = () => {
 
   const deleteMutation = useMutation({
     mutationFn: (categoryId: number) => api.delete(`/categories/${categoryId}`),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['categories', id] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['categories', id] })
+      setDeleteId(null)
+    },
   })
 
   const filteredCategories = categories.filter(c =>
@@ -32,8 +35,11 @@ export const useDeckDetail = () => {
   )
 
   const handleDelete = (categoryId: number) => {
-    if (!window.confirm('¿Eliminar esta categoría y todas sus tarjetas?')) return
-    deleteMutation.mutate(categoryId)
+    setDeleteId(categoryId)
+  }
+
+  const confirmDelete = () => {
+    if (deleteId) deleteMutation.mutate(deleteId)
   }
 
   const handleCategoryClick = (categoryId: number) => {
@@ -49,8 +55,9 @@ export const useDeckDetail = () => {
     categories: filteredCategories,
     search, setSearch,
     loading: isLoading,
-    showModal, setShowModal,
+    deleteId, setDeleteId,
     handleDelete,
+    confirmDelete,
     handleCategoryClick,
     handleBack,
   }
