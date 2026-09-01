@@ -22,7 +22,6 @@ export const DeckDetail = () => {
     setDeleteId,
     handleDelete,
     confirmDelete,
-    handleCategoryClick,
     handleBack,
   } = useDeckDetail();
 
@@ -74,7 +73,9 @@ export const DeckDetail = () => {
               $variant="stacked"
               title={category.name}
               subtitle={`${category.card_count} tarjetas`}
-              onClick={() => handleCategoryClick(category.id)}
+              onClick={() =>
+                navigate(`/decks/${deck?.id}/review/${category.id}`)
+              }
               onDelete={() => handleDelete(category.id)}
               onEdit={() => navigate(`/categories/${category.id}/edit`)}
             />

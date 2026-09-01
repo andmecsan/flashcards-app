@@ -42,10 +42,6 @@ export const useDeckDetail = () => {
     if (deleteId) deleteMutation.mutate(deleteId)
   }
 
-  const handleCategoryClick = (categoryId: number) => {
-    navigate(`/categories/${categoryId}`)
-  }
-
   const handleBack = () => {
     navigate('/')
   }
@@ -58,7 +54,6 @@ export const useDeckDetail = () => {
     deleteId, setDeleteId,
     handleDelete,
     confirmDelete,
-    handleCategoryClick,
     handleBack,
   }
 }

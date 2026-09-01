@@ -9,7 +9,7 @@ export const Wrapper = styled.div`
   background: ${({ theme }) => theme.colors.background};
 `
 
-export const StudyCard = styled.div`
+export const Card = styled.div`
   background: ${({ theme }) => theme.colors.surface};
   border-radius: ${({ theme }) => theme.radii.lg};
   width: 100%;
@@ -31,6 +31,16 @@ export const Progress = styled.span`
   font-family: ${({ theme }) => theme.fonts.main};
   font-size: 0.875rem;
   color: ${({ theme }) => theme.colors.textMuted};
+`
+
+export const CategoryLabel = styled.span`
+  font-family: ${({ theme }) => theme.fonts.main};
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: ${({ theme }) => theme.colors.primary};
+  background: ${({ theme }) => theme.colors.primaryLight};
+  padding: 0.25rem 0.75rem;
+  border-radius: ${({ theme }) => theme.radii.full};
 `
 
 export const FlipButton = styled.button`
@@ -91,7 +101,13 @@ export const RatingButtons = styled.div`
   gap: 0.5rem;
 `
 
-export const CompletedWrapper = styled.div`
+export const HintText = styled.p`
+  font-family: ${({ theme }) => theme.fonts.main};
+  font-size: 0.875rem;
+  color: ${({ theme }) => theme.colors.textMuted};
+`
+
+export const EmptyWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -100,14 +116,14 @@ export const CompletedWrapper = styled.div`
   padding: 4rem 2rem;
 `
 
-export const CompletedTitle = styled.h2`
+export const EmptyTitle = styled.h2`
   font-family: ${({ theme }) => theme.fonts.main};
   font-size: 1.5rem;
   font-weight: 700;
   color: ${({ theme }) => theme.colors.text};
 `
 
-export const CompletedMessage = styled.p`
+export const EmptyMessage = styled.p`
   font-family: ${({ theme }) => theme.fonts.main};
   font-size: 0.875rem;
   color: ${({ theme }) => theme.colors.textSecondary};

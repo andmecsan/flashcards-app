@@ -10,6 +10,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { DeckDetail } from "./pages/DeckDetail";
 import { CreateTopic } from "./pages/CreateTopic";
 import { Study } from "./pages/Study";
+import { Review } from "./pages/Review";
 
 function App() {
   const queryClient = new QueryClient();
@@ -53,8 +54,11 @@ function App() {
             />
             <Route
               path="/study/:deckId"
-              element={token ? <Study /> : <Navigate to="/login" />}
+              element={token ? <Study key="study" /> : <Navigate to="/login" />}
             />
+            <Route
+            path="/decks/:deckId/review/:categoryId" element=
+            {token ? <Review /> : <Navigate to="/login" />} />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
