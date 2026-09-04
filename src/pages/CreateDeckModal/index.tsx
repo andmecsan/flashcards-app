@@ -1,16 +1,23 @@
 import { Modal } from "../../components/Modal";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
+
+import { ColorPicker } from "../../components/ColorPicker";
 import { useCreateDeck } from "./useCreateDeck";
 import type { CreateDeckModalProps } from "./types";
 import { Form } from "./styles";
+import { EmojiPicker } from "../../components/EmojiPicker";
 
-export const CreateDeckModal = ({ onClose }: CreateDeckModalProps) => {
-  const { form, handleSubmit } = useCreateDeck(onClose);
+export const CreateDeckModal = ({ onClose, deck }: CreateDeckModalProps) => {
+  const { form, handleSubmit, isEditing } = useCreateDeck(onClose, deck);
 
   return (
-    <Modal title="Nuevo mazo" onClose={onClose}>
+    <Modal title={isEditing ? "Editar mazo" : "Nuevo mazo"} onClose={onClose}>
       <Form>
+        <EmojiPicker
+          value={form.watch("icon")}
+          onChange={(emoji) => form.setValue("icon", emoji)}
+        />
         <Input
           label="Nombre"
           placeholder="Ej: Chino HSK-1"
@@ -19,13 +26,12 @@ export const CreateDeckModal = ({ onClose }: CreateDeckModalProps) => {
           })}
           error={form.formState.errors.name?.message}
         />
-        <Input
-          label="Descripción"
-          placeholder="Ej: Vocabulario básico de chino mandarín"
-          registration={form.register("description")}
+        <ColorPicker
+          value={form.watch("color")}
+          onChange={(color) => form.setValue("color", color)}
         />
         <Button $fullWidth onClick={handleSubmit}>
-          Crear mazo
+          {isEditing ? "Guardar cambios" : "Crear mazo"}
         </Button>
       </Form>
     </Modal>

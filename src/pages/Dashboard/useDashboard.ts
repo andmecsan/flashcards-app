@@ -9,6 +9,7 @@ export const useDashboard = () => {
   const queryClient = useQueryClient()
   const [search, setSearch] = useState('')
   const [showModal, setShowModal] = useState(false)
+  const [editDeck, setEditDeck] = useState<Deck | null>(null)
   const [deleteId, setDeleteId] = useState<number | null>(null)
 
   const debouncedSearch = useDebounce(search)
@@ -47,10 +48,11 @@ export const useDashboard = () => {
     stats,
     search, setSearch,
     loading: isLoading,
+    fetching: isFetching,
     showModal, setShowModal,
+    editDeck, setEditDeck,
     deleteId, setDeleteId,
     handleDelete,
     confirmDelete,
-    fetching: isFetching
   }
 }

@@ -12,23 +12,14 @@ import {
   ProgressWrapper,
   ProgressHeader,
   ProgressLabel,
-  ProgressTrack,
-  ProgressSegment,
-  ProgressLegend,
-  LegendItem,
-  LegendDot,
   ReviewBanner,
   ReviewInfo,
 } from "./styles";
+import { ProgressBar } from "../ProgressBar";
 
 export const DeckStats = ({ stats, deckId }: DeckStatsProps) => {
   const theme = useTheme();
   const navigate = useNavigate();
-
-  const total = stats.total_cards || 1;
-  const masteredPct = (stats.mastered / total) * 100;
-  const inProgressPct = (stats.in_progress / total) * 100;
-  const newPct = 100 - masteredPct - inProgressPct;
 
   return (
     <Wrapper>
@@ -59,31 +50,12 @@ export const DeckStats = ({ stats, deckId }: DeckStatsProps) => {
         <ProgressHeader>
           <ProgressLabel>Progreso del mazo</ProgressLabel>
         </ProgressHeader>
-        <ProgressTrack>
-          <ProgressSegment
-            $percent={masteredPct}
-            $color={theme.colors.primary}
-          />
-          <ProgressSegment
-            $percent={inProgressPct}
-            $color={theme.colors.warning}
-          />
-          <ProgressSegment $percent={newPct} $color={theme.colors.border} />
-        </ProgressTrack>
-        <ProgressLegend>
-          <LegendItem>
-            <LegendDot $color={theme.colors.primary} />
-            Dominadas ({stats.mastered ?? 0})
-          </LegendItem>
-          <LegendItem>
-            <LegendDot $color={theme.colors.warning} />
-            En progreso ({stats.in_progress ?? 0})
-          </LegendItem>
-          <LegendItem>
-            <LegendDot $color={theme.colors.border} />
-            Nuevas ({stats.new_cards ?? 0})
-          </LegendItem>
-        </ProgressLegend>
+        <ProgressBar
+          mastered={stats.mastered}
+          inProgress={stats.in_progress}
+          newCards={stats.new_cards}
+          showLegend
+        />
       </ProgressWrapper>
 
       {stats.next_review && (

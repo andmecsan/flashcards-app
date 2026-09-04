@@ -1,8 +1,15 @@
 export interface CreateDeckModalProps {
   onClose: () => void
+  deck?: {
+    id: number
+    name: string
+    icon: string
+    color: string
+  }
 }
 
-export interface CreateDeckForm {
+export interface DeckFormData {
   name: string
-  description: string
+  icon: string
+  color: string
 }

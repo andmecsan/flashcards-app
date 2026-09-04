@@ -10,6 +10,7 @@ import { ConfirmModal } from "../../components/ConfirmModal";
 import { CreateDeckModal } from "../CreateDeckModal";
 import { useDashboard } from "./useDashboard";
 import { Toolbar, SearchWrapper, Title, Grid, EmptyState } from "./styles";
+import { ProgressBar } from "../../components/ProgressBar";
 
 export const Dashboard = () => {
   const {
@@ -20,6 +21,8 @@ export const Dashboard = () => {
     loading,
     fetching,
     showModal,
+    editDeck,
+    setEditDeck,
     setShowModal,
     deleteId,
     setDeleteId,
@@ -70,9 +73,18 @@ export const Dashboard = () => {
               badge={
                 deck.due_count > 0 ? `${deck.due_count} pendientes` : undefined
               }
+              icon={<span>{deck.icon}</span>}
+              headerColor={deck.color}
               onClick={() => navigate(`/decks/${deck.id}`)}
               onDelete={() => handleDelete(deck.id)}
-            />
+              onEdit={() => setEditDeck(deck)}
+            >
+              <ProgressBar
+                mastered={deck.mastered}
+                inProgress={deck.in_progress}
+                newCards={deck.new_cards}
+              />
+            </Card>
           ))}
         </Grid>
       ) : (
@@ -86,6 +98,9 @@ export const Dashboard = () => {
       )}
 
       {showModal && <CreateDeckModal onClose={() => setShowModal(false)} />}
+      {editDeck && (
+        <CreateDeckModal deck={editDeck} onClose={() => setEditDeck(null)} />
+      )}
 
       {deleteId && (
         <ConfirmModal
