@@ -1,5 +1,5 @@
 export interface ButtonProps {
-  $variant?: 'primary' | 'secondary' | 'danger' | 'ghost' | 'success' | 'warning'
+  $variant?: 'primary' | 'secondary' | 'danger' | 'ghost' | 'success' | 'warning' | 'link'
   $size?: 'sm' | 'md' | 'lg'
   $soft?: boolean
   $fullWidth?: boolean

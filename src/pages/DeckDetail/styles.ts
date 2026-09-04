@@ -3,8 +3,17 @@ import styled from 'styled-components'
 export const Toolbar = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 1rem;
   margin-bottom: 2rem;
+  flex: 1;
+  min-width: 0;
+`
+
+export const ButtonGroup = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 `
 
 export const Title = styled.h2`

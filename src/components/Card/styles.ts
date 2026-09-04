@@ -8,7 +8,6 @@ export const Wrapper = styled.div<{ $variant: 'default' | 'stacked' }>`
   &:hover {
     transform: translateY(-0.125rem);
   }
-
 ${({ $variant }) => $variant === 'stacked' && css`
   padding-top: 0.75rem;
   padding-right: 0.75rem;
@@ -20,8 +19,9 @@ ${({ $variant }) => $variant === 'stacked' && css`
     right: 0;
     bottom: 0.75rem;
     left: 0.75rem;
-    background: ${({ theme }) => theme.colors.textMuted};
-    box-shadow: 0 0.25rem 0.5rem ${({ theme }) => theme.colors.textMuted};
+    background: ${({ theme }) => theme.colors.primaryMid};
+    border-radius: ${({ theme }) => theme.radii.lg};
+    box-shadow: 0 0.25rem 0.5rem ${({ theme }) => theme.colors.primaryMid};
     z-index: 0;
   }
 `}
@@ -41,10 +41,10 @@ export const Content = styled.div<{ $variant: 'default' | 'stacked' }>`
   position: relative;
   z-index: 2;
   overflow: hidden;
+  border-radius: ${({ theme }) => theme.radii.lg};
 
   ${({ $variant, theme }) => $variant === 'default' && css`
     background: ${theme.colors.surface};
-    border-radius: ${theme.radii.lg};
   `}
 
   ${({ $variant, theme }) => $variant === 'stacked' && css`

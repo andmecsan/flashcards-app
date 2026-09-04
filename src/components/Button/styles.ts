@@ -33,6 +33,14 @@ const solidVariants = {
     border: 1px solid ${({ theme }) => theme.colors.border};
     &:hover:not(:disabled) { background: ${({ theme }) => theme.colors.background}; }
   `,
+
+    link: css`
+    background: transparent;
+    color: ${({ theme }) => theme.colors.textSecondary};
+    padding: 0;
+    &:hover:not(:disabled) { color: ${({ theme }) => theme.colors.primary}; }
+  `,
+
 }
 
 const softVariants = {
@@ -62,6 +70,7 @@ const softVariants = {
     &:hover:not(:disabled) { opacity: 0.8; }
   `,
   ghost: css``,
+   link: css``,
 }
 
 const sizes = {

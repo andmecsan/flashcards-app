@@ -9,57 +9,38 @@ export const Wrapper = styled.div`
   background: ${({ theme }) => theme.colors.background};
 `
 
-export const Card = styled.div`
-  background: ${({ theme }) => theme.colors.surface};
-  border-radius: ${({ theme }) => theme.radii.lg};
+export const CardContainer = styled.div`
   width: 100%;
   max-width: 44rem;
   min-height: 28rem;
+  perspective: 1000px;
+`
+
+export const CardInner = styled.div<{ $flipped: boolean }>`
+  width: 100%;
+  min-height: 28rem;
+  position: relative;
+  transition: transform 0.6s ease;
+  transform-style: preserve-3d;
+  transform: ${({ $flipped }) => $flipped ? 'rotateY(180deg)' : 'rotateY(0)'};
+`
+
+export const CardFace = styled.div`
+  position: absolute;
+  inset: 0;
+  background: ${({ theme }) => theme.colors.surface};
+  border-radius: ${({ theme }) => theme.radii.lg};
+  box-shadow: 0 0.5rem 2rem ${({ theme }) => theme.colors.border};
+  backface-visibility: hidden;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 0.5rem 2rem ${({ theme }) => theme.colors.border};
 `
 
-export const CardHeader = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.25rem 1.5rem;
+export const CardFaceBack = styled(CardFace)`
+  transform: rotateY(180deg);
 `
 
-export const Progress = styled.span`
-  font-family: ${({ theme }) => theme.fonts.main};
-  font-size: 0.875rem;
-  color: ${({ theme }) => theme.colors.textMuted};
-`
 
-export const CategoryLabel = styled.span`
-  font-family: ${({ theme }) => theme.fonts.main};
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: ${({ theme }) => theme.colors.primary};
-  background: ${({ theme }) => theme.colors.primaryLight};
-  padding: 0.25rem 0.75rem;
-  border-radius: ${({ theme }) => theme.radii.full};
-`
-
-export const FlipButton = styled.button`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-family: ${({ theme }) => theme.fonts.main};
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: ${({ theme }) => theme.colors.textSecondary};
-  transition: color 0.15s;
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.primary};
-  }
-`
 
 export const CardBody = styled.div`
   flex: 1;

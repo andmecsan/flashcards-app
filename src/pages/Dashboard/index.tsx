@@ -4,7 +4,8 @@ import { Layout } from "../../components/Layout";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
 import { Card } from "../../components/Card";
-import { Loader } from "../../components/Loader";
+import { StatsBar } from "../../components/StatsBar";
+import { CardSkeleton } from "../../components/Skeleton";
 import { ConfirmModal } from "../../components/ConfirmModal";
 import { CreateDeckModal } from "../CreateDeckModal";
 import { useDashboard } from "./useDashboard";
@@ -13,9 +14,11 @@ import { Toolbar, SearchWrapper, Title, Grid, EmptyState } from "./styles";
 export const Dashboard = () => {
   const {
     decks,
+    stats,
     search,
     setSearch,
     loading,
+    fetching,
     showModal,
     setShowModal,
     deleteId,
@@ -25,15 +28,15 @@ export const Dashboard = () => {
   } = useDashboard();
   const navigate = useNavigate();
 
-  if (loading)
-    return (
-      <Layout>
-        <Loader />
-      </Layout>
-    );
-
   return (
     <Layout>
+      {stats && (
+        <StatsBar
+          stats={stats}
+          onStudy={(deckId) => navigate(`/study/${deckId}`)}
+        />
+      )}
+
       <Toolbar>
         <Title>Mis mazos</Title>
         <SearchWrapper>
@@ -49,7 +52,15 @@ export const Dashboard = () => {
         </Button>
       </Toolbar>
 
-      {decks.length > 0 ? (
+      {loading ? (
+        <Grid>
+          <CardSkeleton count={3} />
+        </Grid>
+      ) : fetching ? (
+        <Grid>
+          <CardSkeleton count={decks.length || 3} />
+        </Grid>
+      ) : decks.length > 0 ? (
         <Grid>
           {decks.map((deck) => (
             <Card

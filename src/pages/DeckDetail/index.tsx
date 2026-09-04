@@ -1,4 +1,4 @@
-import { Search, Plus, Play } from "lucide-react";
+import { Search, Plus, Play, Upload } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Layout } from "../../components/Layout";
 import { Input } from "../../components/Input";
@@ -8,12 +8,21 @@ import { Breadcrumb } from "../../components/Breadcrumb";
 import { Loader } from "../../components/Loader";
 import { ConfirmModal } from "../../components/ConfirmModal";
 import { useDeckDetail } from "./useDeckDetail";
-import { Toolbar, SearchWrapper, Grid, EmptyState } from "./styles";
+import {
+  Toolbar,
+  SearchWrapper,
+  Grid,
+  EmptyState,
+  ButtonGroup,
+} from "./styles";
+import { ImportPdfModal } from "../ImportPdfModal";
+import { DeckStats } from "../../components/DeckStats";
 
 export const DeckDetail = () => {
   const navigate = useNavigate();
   const {
     deck,
+    stats,
     categories,
     search,
     setSearch,
@@ -23,6 +32,8 @@ export const DeckDetail = () => {
     handleDelete,
     confirmDelete,
     handleBack,
+    showImport,
+    setShowImport,
   } = useDeckDetail();
 
   if (loading)
@@ -40,7 +51,7 @@ export const DeckDetail = () => {
           { label: deck?.name || "" },
         ]}
       />
-
+      {stats && deck && <DeckStats stats={stats} deckId={deck.id} />}
       <Toolbar>
         <SearchWrapper>
           <Input
@@ -50,19 +61,29 @@ export const DeckDetail = () => {
             icon={<Search size={18} />}
           />
         </SearchWrapper>
-        <Button
-          $variant="success"
-          icon={<Play size={18} />}
-          onClick={() => navigate(`/study/${deck?.id}`)}
-        >
-          Estudiar
-        </Button>
-        <Button
-          icon={<Plus size={18} />}
-          onClick={() => navigate(`/decks/${deck?.id}/new-topic`)}
-        >
-          Añadir categoría
-        </Button>
+        <ButtonGroup>
+          <Button
+            $variant="success"
+            icon={<Play size={18} />}
+            onClick={() => navigate(`/study/${deck?.id}`)}
+          >
+            Estudiar
+          </Button>
+          <Button
+            icon={<Plus size={18} />}
+            onClick={() => navigate(`/decks/${deck?.id}/new-topic`)}
+          >
+            Añadir categoría
+          </Button>
+          <Button
+            $soft
+            $variant="primary"
+            icon={<Upload size={18} />}
+            onClick={() => setShowImport(true)}
+          >
+            Importar PDF
+          </Button>
+        </ButtonGroup>
       </Toolbar>
 
       {categories.length > 0 ? (
@@ -98,6 +119,9 @@ export const DeckDetail = () => {
           onConfirm={confirmDelete}
           onClose={() => setDeleteId(null)}
         />
+      )}
+      {showImport && deck && (
+        <ImportPdfModal deckId={deck.id} onClose={() => setShowImport(false)} />
       )}
     </Layout>
   );

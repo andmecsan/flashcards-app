@@ -2,6 +2,7 @@ export const colors = {
   // Primary — violeta eléctrico
   primary: '#7C3AED',
   primaryHover: '#6D28D9',
+   primaryMid: '#C4B5FD',
   primaryLight: '#F3E8FF',
 
   // Accent — teal

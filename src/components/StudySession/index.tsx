@@ -1,15 +1,14 @@
 import { useState } from "react";
-import { RotateCcw, LogOut, SkipForward } from "lucide-react";
+import { LogOut, SkipForward } from "lucide-react";
 import { Button } from "../Button";
 import { Loader } from "../Loader";
 import type { StudySessionProps } from "./types";
 import {
   Wrapper,
-  Card,
-  CardHeader,
-  Progress,
-  CategoryLabel,
-  FlipButton,
+  CardContainer,
+  CardInner,
+  CardFace,
+  CardFaceBack,
   CardBody,
   CardLabel,
   CardText,
@@ -20,6 +19,7 @@ import {
   EmptyTitle,
   EmptyMessage,
 } from "./styles";
+import { CardHeader } from "./Header";
 
 export const StudySession = ({
   cards,
@@ -44,10 +44,15 @@ export const StudySession = ({
 
   const handleNext = () => {
     if (currentIndex < total - 1) {
-      setCurrentIndex((prev) => prev + 1);
       setIsFlipped(false);
+      setTimeout(() => {
+        setCurrentIndex((prev) => prev + 1);
+      }, 600);
     } else {
-      setCompleted(true);
+      setIsFlipped(false);
+      setTimeout(() => {
+        setCompleted(true);
+      }, 600);
     }
   };
 
@@ -79,15 +84,17 @@ export const StudySession = ({
   if (completed) {
     return (
       <Wrapper>
-        <Card>
-          <EmptyWrapper>
-            <EmptyTitle>{completedTitle}</EmptyTitle>
-            <EmptyMessage>
-              {completedMessage || `Has repasado ${total} tarjetas.`}
-            </EmptyMessage>
-            <Button onClick={onExit}>Volver</Button>
-          </EmptyWrapper>
-        </Card>
+        <CardContainer>
+          <CardFace style={{ position: "relative" }}>
+            <EmptyWrapper>
+              <EmptyTitle>{completedTitle}</EmptyTitle>
+              <EmptyMessage>
+                {completedMessage || `Has repasado ${total} tarjetas.`}
+              </EmptyMessage>
+              <Button onClick={onExit}>Volver</Button>
+            </EmptyWrapper>
+          </CardFace>
+        </CardContainer>
       </Wrapper>
     );
   }
@@ -96,55 +103,77 @@ export const StudySession = ({
 
   return (
     <Wrapper>
-      <Card>
-        <CardHeader>
-          <Progress>
-            {progress}/{total}
-          </Progress>
-          <CategoryLabel>{currentCard.category}</CategoryLabel>
-          <FlipButton onClick={handleFlip}>
-            Dar la vuelta <RotateCcw size={16} />
-          </FlipButton>
-        </CardHeader>
-
-        <CardBody onClick={handleFlip}>
-          <CardLabel>{isFlipped ? "Respuesta:" : "Pregunta:"}</CardLabel>
-          <CardText>
-            {isFlipped ? currentCard.back : currentCard.front}
-          </CardText>
-        </CardBody>
-
-        <CardFooter>
-          <Button $variant="ghost" icon={<LogOut size={16} />} onClick={onExit}>
-            Salir
-          </Button>
-
-          {isFlipped ? (
-            <RatingButtons>
-              <Button $variant="danger" $soft onClick={() => handleRate(1)}>
-                No lo sabía
+      <CardContainer>
+        <CardInner $flipped={isFlipped}>
+          <CardFace>
+            <CardHeader
+              onFlip={handleFlip}
+              progress={progress}
+              total={total}
+              onFlipLabel="Ver respuesta"
+              categoryName={currentCard.category}
+            />
+            <CardBody onClick={handleFlip}>
+              <CardLabel>Pregunta:</CardLabel>
+              <CardText>{currentCard.front}</CardText>
+            </CardBody>
+            <CardFooter>
+              <Button
+                $variant="danger"
+                icon={<LogOut size={16} />}
+                onClick={onExit}
+              >
+                Salir
               </Button>
-              <Button $variant="warning" $soft onClick={() => handleRate(3)}>
-                Más o menos
+              <HintText>Pulsa la tarjeta para ver la respuesta</HintText>
+            </CardFooter>
+          </CardFace>
+
+          <CardFaceBack>
+            <CardHeader
+              onFlip={handleFlip}
+              onFlipLabel="Ver pregunta"
+              progress={progress}
+              total={total}
+              categoryName={currentCard.category}
+            />
+
+            <CardBody onClick={handleFlip}>
+              <CardLabel>Respuesta:</CardLabel>
+              <CardText>{currentCard.back}</CardText>
+            </CardBody>
+            <CardFooter>
+              <Button
+                $variant="ghost"
+                icon={<LogOut size={16} />}
+                onClick={onExit}
+              >
+                Salir
               </Button>
-              <Button $variant="success" $soft onClick={() => handleRate(5)}>
-                Lo sabía
-              </Button>
-              {showSkip && (
-                <Button
-                  $variant="ghost"
-                  icon={<SkipForward size={16} />}
-                  onClick={handleNext}
-                >
-                  Saltar
+              <RatingButtons>
+                <Button $variant="danger" $soft onClick={() => handleRate(1)}>
+                  No lo sabía
                 </Button>
-              )}
-            </RatingButtons>
-          ) : (
-            <HintText>Pulsa la tarjeta para ver la respuesta</HintText>
-          )}
-        </CardFooter>
-      </Card>
+                <Button $variant="warning" $soft onClick={() => handleRate(3)}>
+                  Más o menos
+                </Button>
+                <Button $variant="success" $soft onClick={() => handleRate(5)}>
+                  Lo sabía
+                </Button>
+                {showSkip && (
+                  <Button
+                    $variant="danger"
+                    icon={<SkipForward size={16} />}
+                    onClick={handleNext}
+                  >
+                    Saltar
+                  </Button>
+                )}
+              </RatingButtons>
+            </CardFooter>
+          </CardFaceBack>
+        </CardInner>
+      </CardContainer>
     </Wrapper>
   );
 };
