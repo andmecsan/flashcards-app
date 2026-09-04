@@ -6,6 +6,7 @@ export const Button = ({
   $size,
   $soft,
   $fullWidth,
+  $iconOnly,
   icon,
   children,
   ...rest
@@ -15,12 +16,13 @@ export const Button = ({
       $variant={$variant}
       $size={$size}
       $soft={$soft}
+      $iconOnly={$iconOnly}
       $fullWidth={$fullWidth}
       {...rest}
     >
       <Content>
         {icon}
-        {children}
+        {!$iconOnly ? children : undefined}
       </Content>
     </StyledButton>
   );

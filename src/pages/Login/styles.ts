@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const PageWrapper = styled.div`
-  min-height: 100;
+  min-height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;

@@ -4,6 +4,7 @@ export interface CardProps {
   subtitle?: string
   badge?: string
   icon?: React.ReactNode
+  headerColor?: string
   children?: React.ReactNode
   onClick?: () => void
   onDelete?: () => void

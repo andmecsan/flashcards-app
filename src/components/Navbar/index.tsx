@@ -1,7 +1,8 @@
 import { User, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Logo } from "../Logo";
-import { Nav, NavActions, NavButton, Separator } from "./styles";
+import { Button } from "../Button";
+import { Nav, NavActions, Separator } from "./styles";
 
 export const Navbar = () => {
   const navigate = useNavigate();
@@ -19,12 +20,13 @@ export const Navbar = () => {
           <Logo height={36} />
         </div>
         <NavActions>
-          <NavButton title="Perfil">
-            <User size={20} />
-          </NavButton>
-          <NavButton title="Cerrar sesión" onClick={handleLogout}>
-            <LogOut size={20} />
-          </NavButton>
+          <Button $variant="ghost" $iconOnly icon={<User size={20} />} />
+          <Button
+            $variant="ghost"
+            $iconOnly
+            icon={<LogOut size={20} />}
+            onClick={handleLogout}
+          />
         </NavActions>
       </Nav>
       <Separator />

@@ -52,19 +52,21 @@ export const Content = styled.div<{ $variant: 'default' | 'stacked' }>`
   `}
 `
 
-export const Header = styled.div`
-  background: ${({ theme }) => theme.colors.primary};
+export const Header = styled.div<{ $color?: string }>`
+  background: ${({ $color, theme }) => $color || theme.colors.primary};
   height: 8rem;
   display: flex;
   align-items: center;
   justify-content: center;
   color: ${({ theme }) => theme.colors.surface};
+  font-size: 2.5rem;
 `
 
 export const Body = styled.div<{ $variant: 'default' | 'stacked' }>`
   padding: ${({ $variant }) => $variant === 'stacked' ? '1.5rem' : '1rem'};
   padding-top: ${({ $variant }) => $variant === 'stacked' ? '2.5rem' : '1rem'};
   display: flex;
+  gap: .5rem;
   flex-direction: column;
     ${({ $variant }) => $variant === 'stacked' && css`
     min-height: 12rem;

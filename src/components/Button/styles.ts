@@ -41,6 +41,12 @@ const solidVariants = {
     &:hover:not(:disabled) { color: ${({ theme }) => theme.colors.primary}; }
   `,
 
+    overlay: css`
+    background: rgba(0, 0, 0, 0.2);
+    color: white;
+    &:hover:not(:disabled) { background: rgba(0, 0, 0, 0.4); }
+  `,
+
 }
 
 const softVariants = {
@@ -70,7 +76,11 @@ const softVariants = {
     &:hover:not(:disabled) { opacity: 0.8; }
   `,
   ghost: css``,
-   link: css``,
+  link: css``,
+  
+  overlay: css`
+  
+  `,
 }
 
 const sizes = {
@@ -79,24 +89,25 @@ const sizes = {
   lg: css`padding: 0.875rem 1.75rem; font-size: 1rem;`,
 }
 
-export const StyledButton = styled.button<Pick<ButtonProps, '$variant' | '$size' | '$fullWidth' | '$soft'>>`
+export const StyledButton = styled.button<Pick<ButtonProps, '$variant' | '$size' | '$fullWidth' | '$soft' | '$iconOnly'>>`
   border: none;
-  border-radius: ${({ theme }) => theme.radii.md};
+  border-radius: ${({ theme, $iconOnly }) => $iconOnly ? theme.radii.full : theme.radii.md};
   font-family: ${({ theme }) => theme.fonts.main};
   font-weight: 600;
   cursor: pointer;
   transition: all 0.15s ease;
-  width: ${({ $fullWidth }) => $fullWidth ? '100%' : 'auto'};
+  width: ${({ $fullWidth, $iconOnly }) => $fullWidth ? '100%' : $iconOnly ? '2rem' : 'auto'};
+  height: ${({ $iconOnly }) => $iconOnly ? '2rem' : 'auto'};
+  padding: ${({ $iconOnly }) => $iconOnly ? '0' : undefined};
 
   ${({ $variant = 'primary', $soft }) => $soft ? softVariants[$variant] : solidVariants[$variant]}
-  ${({ $size = 'md' }) => sizes[$size]}
+  ${({ $size = 'md', $iconOnly }) => !$iconOnly && sizes[$size]}
 
   &:disabled {
     opacity: 0.5;
     cursor: not-allowed;
   }
 `
-
 export const Content = styled.span`
   display: flex;
   align-items: center;

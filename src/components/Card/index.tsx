@@ -1,4 +1,5 @@
-import { Trash2, Pencil, BookOpen } from "lucide-react";
+import { Trash2, Pencil } from "lucide-react";
+import { Button } from "../Button";
 import {
   Wrapper,
   Content,
@@ -8,7 +9,6 @@ import {
   Subtitle,
   Badge,
   Actions,
-  ActionButton,
 } from "./styles";
 import type { CardProps } from "./types";
 
@@ -18,6 +18,7 @@ export const Card = ({
   subtitle,
   badge,
   icon,
+  headerColor,
   children,
   onClick,
   onDelete,
@@ -36,20 +37,24 @@ export const Card = ({
         {hasActions && (
           <Actions $variant={$variant}>
             {onDelete && (
-              <ActionButton $danger onClick={(e) => handleAction(e, onDelete)}>
-                <Trash2 size={14} />
-              </ActionButton>
+              <Button
+                $variant="overlay"
+                $iconOnly
+                icon={<Trash2 size={14} />}
+                onClick={(e) => handleAction(e, onDelete)}
+              />
             )}
             {onEdit && (
-              <ActionButton onClick={(e) => handleAction(e, onEdit)}>
-                <Pencil size={14} />
-              </ActionButton>
+              <Button
+                $variant="overlay"
+                $iconOnly
+                icon={<Pencil size={14} />}
+                onClick={(e) => handleAction(e, onEdit)}
+              />
             )}
           </Actions>
         )}
-        {$variant === "default" && (
-          <Header>{icon || <BookOpen size={32} />}</Header>
-        )}
+        {$variant === "default" && <Header $color={headerColor}>{icon}</Header>}
         <Body $variant={$variant}>
           <Title $variant={$variant}>{title}</Title>
           {subtitle && (
