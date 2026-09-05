@@ -11,6 +11,8 @@ import { DeckDetail } from "./pages/DeckDetail";
 import { CreateTopic } from "./pages/CreateTopic";
 import { Study } from "./pages/Study";
 import { Review } from "./pages/Review";
+import { Profile } from "./pages/Profile";
+import { FAQ } from "./pages/FAQ";
 
 function App() {
   const queryClient = new QueryClient();
@@ -34,7 +36,17 @@ function App() {
             />
             <Route
               path="/login"
-              element={token ? <Navigate to="/" /> : <Login />}
+              element={
+                token ? <Navigate to="/" /> : <Login onLogin={handleLogin} />
+              }
+            />
+            <Route
+              path="/faq"
+              element={token ? <FAQ /> : <Navigate to="/login" />}
+            />
+            <Route
+              path="/profile"
+              element={token ? <Profile /> : <Navigate to="/login" />}
             />
             <Route
               path="/"
@@ -57,8 +69,9 @@ function App() {
               element={token ? <Study key="study" /> : <Navigate to="/login" />}
             />
             <Route
-            path="/decks/:deckId/review/:categoryId" element=
-            {token ? <Review /> : <Navigate to="/login" />} />
+              path="/decks/:deckId/review/:categoryId"
+              element={token ? <Review /> : <Navigate to="/login" />}
+            />
           </Routes>
         </BrowserRouter>
       </ThemeProvider>
