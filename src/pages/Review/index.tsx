@@ -8,10 +8,10 @@ export const Review = () => {
     <StudySession
       cards={cards}
       loading={loading}
-      showSkip
       emptyTitle="No hay tarjetas"
       emptyMessage="Esta categoría no tiene tarjetas todavía."
       completedTitle="¡Repaso completado!"
+      showRatings={false}
       onRate={handleRate}
       onExit={handleExit}
     />

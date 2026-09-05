@@ -55,11 +55,7 @@ export const Dashboard = () => {
         </Button>
       </Toolbar>
 
-      {loading ? (
-        <Grid>
-          <CardSkeleton count={3} />
-        </Grid>
-      ) : fetching ? (
+      {loading || fetching ? (
         <Grid>
           <CardSkeleton count={decks.length || 3} />
         </Grid>

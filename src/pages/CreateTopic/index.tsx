@@ -3,7 +3,6 @@ import { Plus, Trash2, Sparkles } from "lucide-react";
 import { Layout } from "../../components/Layout";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
-import { Loader } from "../../components/Loader";
 import { useCreateTopic } from "./useCreateTopic";
 import {
   FormWrapper,
@@ -42,24 +41,10 @@ export const CreateTopic = () => {
     e.target.value = "";
   };
 
-  if (generating) {
-    return (
-      <Layout
-        breadcrumb={[
-          { label: "Home", onClick: () => (window.location.href = "/") },
-          { label: deck?.name || "", onClick: handleBack },
-          { label: isEditing ? "Editar tema" : "Nuevo tema" },
-        ]}
-      >
-        <FormWrapper>
-          <Loader message="La IA está generando las tarjetas..." />
-        </FormWrapper>
-      </Layout>
-    );
-  }
-
   return (
     <Layout
+      loading={generating}
+      loadingMessage="La IA está generando las tarjetas..."
       breadcrumb={[
         { label: "Home", onClick: () => (window.location.href = "/") },
         { label: deck?.name || "", onClick: handleBack },

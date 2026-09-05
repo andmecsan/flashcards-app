@@ -57,34 +57,6 @@ export const DividerText = styled.span`
   color: ${({ theme }) => theme.colors.textMuted};
 `
 
-export const GoogleButton = styled.button`
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1.5rem;
-  border-radius: ${({ theme }) => theme.radii.md};
-  border: 1px solid ${({ theme }) => theme.colors.border};
-  background: ${({ theme }) => theme.colors.surface};
-  font-family: ${({ theme }) => theme.fonts.main};
-  font-size: 0.9375rem;
-  font-weight: 600;
-  color: ${({ theme }) => theme.colors.text};
-  cursor: pointer;
-  transition: all 0.15s ease;
-
-  &:hover {
-    background: ${({ theme }) => theme.colors.background};
-    border-color: ${({ theme }) => theme.colors.primary};
-  }
-`
-
-export const GoogleIcon = styled.svg`
-  width: 1.25rem;
-  height: 1.25rem;
-`
-
 export const SwitchText = styled.p`
   font-family: ${({ theme }) => theme.fonts.main};
   font-size: 0.8125rem;

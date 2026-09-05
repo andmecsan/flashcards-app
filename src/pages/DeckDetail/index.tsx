@@ -4,7 +4,6 @@ import { Layout } from "../../components/Layout";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
 import { Card } from "../../components/Card";
-import { Loader } from "../../components/Loader";
 import { ConfirmModal } from "../../components/ConfirmModal";
 import { useDeckDetail } from "./useDeckDetail";
 import {
@@ -32,15 +31,9 @@ export const DeckDetail = () => {
     handleBack,
   } = useDeckDetail();
 
-  if (loading)
-    return (
-      <Layout>
-        <Loader />
-      </Layout>
-    );
-
   return (
     <Layout
+      loading={loading}
       breadcrumb={[
         { label: "Home", onClick: handleBack },
         { label: deck?.name || "" },

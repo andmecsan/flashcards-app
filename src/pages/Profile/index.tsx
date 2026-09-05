@@ -1,7 +1,6 @@
 import { Layout } from "../../components/Layout";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
-import { Loader } from "../../components/Loader";
 import { ConfirmModal } from "../../components/ConfirmModal";
 import { useProfile } from "./useProfile";
 import { useTheme } from "styled-components";
@@ -36,16 +35,11 @@ export const Profile = () => {
     handleDelete,
   } = useProfile();
 
-  if (loading)
-    return (
-      <Layout>
-        <Loader />
-      </Layout>
-    );
   if (!profile) return null;
 
   return (
     <Layout
+      loading={loading}
       breadcrumb={[
         { label: "Home", onClick: () => navigate("/") },
         { label: "Perfil" },
