@@ -25,10 +25,13 @@ const { data: cards = [], isLoading } = useQuery<StudySessionCard[]>({
     reviewMutation.mutate({ cardId, quality })
   }
 
-  const handleExit = () => {
-    queryClient.removeQueries({ queryKey: ['study', 'deck', deckId] })
-    navigate(`/decks/${deckId}`)
-  }
+const handleExit = () => {
+  queryClient.removeQueries({ queryKey: ['study', 'deck', deckId] })
+  queryClient.invalidateQueries({ queryKey: ['decks'] })
+  queryClient.invalidateQueries({ queryKey: ['deck-stats', deckId] })
+  queryClient.invalidateQueries({ queryKey: ['stats'] })
+  navigate(`/decks/${deckId}`)
+}
 
   return { cards, loading: isLoading, handleRate, handleExit }
 }

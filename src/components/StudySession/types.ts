@@ -12,7 +12,7 @@ export interface StudySessionProps {
   emptyMessage?: string
   completedTitle?: string
   completedMessage?: string
-  showSkip?: boolean
+  showRatings?: boolean
   onRate: (cardId: number, quality: number) => void
   onExit: () => void
 }

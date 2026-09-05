@@ -28,7 +28,7 @@ export const StudySession = ({
   emptyMessage = "Vuelve más tarde para repasar.",
   completedTitle = "¡Sesión completada!",
   completedMessage,
-  showSkip = false,
+  showRatings = false,
   onRate,
   onExit,
 }: StudySessionProps) => {
@@ -144,32 +144,41 @@ export const StudySession = ({
             </CardBody>
             <CardFooter>
               <Button
-                $variant="ghost"
+                $variant="danger"
                 icon={<LogOut size={16} />}
                 onClick={onExit}
               >
                 Salir
               </Button>
-              <RatingButtons>
-                <Button $variant="danger" $soft onClick={() => handleRate(1)}>
-                  No lo sabía
-                </Button>
-                <Button $variant="warning" $soft onClick={() => handleRate(3)}>
-                  Más o menos
-                </Button>
-                <Button $variant="success" $soft onClick={() => handleRate(5)}>
-                  Lo sabía
-                </Button>
-                {showSkip && (
-                  <Button
-                    $variant="danger"
-                    icon={<SkipForward size={16} />}
-                    onClick={handleNext}
-                  >
-                    Saltar
+              {showRatings ? (
+                <RatingButtons>
+                  <Button $variant="danger" $soft onClick={() => handleRate(1)}>
+                    No lo sabía
                   </Button>
-                )}
-              </RatingButtons>
+                  <Button
+                    $variant="warning"
+                    $soft
+                    onClick={() => handleRate(3)}
+                  >
+                    Más o menos
+                  </Button>
+                  <Button
+                    $variant="success"
+                    $soft
+                    onClick={() => handleRate(5)}
+                  >
+                    Lo sabía
+                  </Button>
+                </RatingButtons>
+              ) : (
+                <Button
+                  $variant="ghost"
+                  icon={<SkipForward size={16} />}
+                  onClick={handleNext}
+                >
+                  Saltar
+                </Button>
+              )}
             </CardFooter>
           </CardFaceBack>
         </CardInner>
