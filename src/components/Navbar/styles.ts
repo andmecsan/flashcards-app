@@ -14,27 +14,35 @@ export const NavActions = styled.div`
   gap: 0.5rem;
 `
 
-export const NavButton = styled.button`
-  width: 2.25rem;
-  height: 2.25rem;
-  border-radius: ${({ theme }) => theme.radii.full};
-  border: none;
-  background: transparent;
-  color: ${({ theme }) => theme.colors.text};
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.125rem;
-  transition: background 0.15s;
+export const NavItem = styled.div`
+  position: relative;
 
-  &:hover {
-    background: ${({ theme }) => theme.colors.background};
+  &::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: -2.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    background: ${({ theme }) => theme.colors.text};
+    color: ${({ theme }) => theme.colors.surface};
+    font-family: ${({ theme }) => theme.fonts.main};
+    font-size: 0.6875rem;
+    font-weight: 500;
+    padding: 0.25rem 0.5rem;
+    border-radius: ${({ theme }) => theme.radii.sm};
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s;
+  }
+
+  &:hover::after {
+    opacity: 1;
   }
 `
 
 export const Separator = styled.div`
-  height: 0.0625rem;
+  height: 1px;
   background: ${({ theme }) => theme.colors.primary};
   opacity: 0.3;
 `
