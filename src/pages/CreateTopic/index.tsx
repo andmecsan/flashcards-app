@@ -1,8 +1,9 @@
-import { Plus, Trash2 } from "lucide-react";
+import { useRef } from "react";
+import { Plus, Trash2, Sparkles } from "lucide-react";
 import { Layout } from "../../components/Layout";
-import { Breadcrumb } from "../../components/Breadcrumb";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
+import { Loader } from "../../components/Loader";
 import { useCreateTopic } from "./useCreateTopic";
 import {
   FormWrapper,
@@ -14,7 +15,9 @@ import {
   SectionTitle,
   Actions,
   ErrorMessage,
+  HiddenInput,
 } from "./styles";
+import { TextArea } from "../../components/TextArea";
 
 export const CreateTopic = () => {
   const {
@@ -22,23 +25,56 @@ export const CreateTopic = () => {
     form,
     fields,
     isEditing,
+    generating,
     handleSubmit,
     handleAddCard,
     handleRemoveCard,
+    handleGenerateFromPdf,
     handleBack,
   } = useCreateTopic();
+  const fileRef = useRef<HTMLInputElement>(null);
 
-  return (
-    <Layout>
-      <Breadcrumb
-        items={[
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file && file.type === "application/pdf") {
+      handleGenerateFromPdf(file);
+    }
+    e.target.value = "";
+  };
+
+  if (generating) {
+    return (
+      <Layout
+        breadcrumb={[
           { label: "Home", onClick: () => (window.location.href = "/") },
           { label: deck?.name || "", onClick: handleBack },
           { label: isEditing ? "Editar tema" : "Nuevo tema" },
         ]}
-      />
+      >
+        <FormWrapper>
+          <Loader message="La IA está generando las tarjetas..." />
+        </FormWrapper>
+      </Layout>
+    );
+  }
 
+  return (
+    <Layout
+      breadcrumb={[
+        { label: "Home", onClick: () => (window.location.href = "/") },
+        { label: deck?.name || "", onClick: handleBack },
+        { label: isEditing ? "Editar tema" : "Nuevo tema" },
+      ]}
+    >
       <FormWrapper>
+        <Button
+          $variant="primary"
+          $size="md"
+          icon={<Sparkles size={16} />}
+          onClick={() => fileRef.current?.click()}
+        >
+          Crear con IA
+        </Button>
         <Input
           label="Nombre del tema"
           placeholder="Ej: Verbos irregulares"
@@ -50,13 +86,28 @@ export const CreateTopic = () => {
 
         <Divider />
 
-        <SectionTitle>Tarjetas</SectionTitle>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <SectionTitle>Tarjetas</SectionTitle>
+
+          <HiddenInput
+            ref={fileRef}
+            type="file"
+            accept=".pdf"
+            onChange={handleFileChange}
+          />
+        </div>
 
         {fields.map((field, index) => (
           <CardRow key={field.id}>
             <CardNumber>{index + 1}</CardNumber>
             <CardInputs>
-              <Input
+              <TextArea
                 label="Pregunta"
                 placeholder="Anverso de la tarjeta"
                 registration={form.register(`cards.${index}.front`, {
@@ -64,7 +115,7 @@ export const CreateTopic = () => {
                 })}
                 error={form.formState.errors.cards?.[index]?.front?.message}
               />
-              <Input
+              <TextArea
                 label="Respuesta"
                 placeholder="Reverso de la tarjeta"
                 registration={form.register(`cards.${index}.back`, {

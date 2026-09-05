@@ -1,12 +1,16 @@
+import { Breadcrumb } from "../Breadcrumb";
 import { Navbar } from "../Navbar";
 import { PageWrapper, Content } from "./styles";
 import type { LayoutProps } from "./types";
 
-export const Layout = ({ children }: LayoutProps) => {
+export const Layout = ({ children, breadcrumb }: LayoutProps) => {
   return (
     <PageWrapper>
       <Navbar />
-      <Content>{children}</Content>
+      <Content>
+        {breadcrumb && <Breadcrumb items={breadcrumb} />}
+        {children}
+      </Content>
     </PageWrapper>
   );
 };

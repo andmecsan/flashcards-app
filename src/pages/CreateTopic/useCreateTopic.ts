@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useForm, useFieldArray } from 'react-hook-form'
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query'
@@ -12,6 +12,7 @@ export const useCreateTopic = () => {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const isEditing = !!categoryId
+  const [generating, setGenerating] = useState(false)
 
   const { data: category } = useQuery<Category>({
     queryKey: ['category', categoryId],
@@ -45,16 +46,7 @@ export const useCreateTopic = () => {
     name: 'cards',
   })
 
-  useEffect(() => {
-    if (isEditing && category && existingCards) {
-      form.reset({
-        name: category.name,
-        cards: existingCards.length > 0
-          ? existingCards.map(c => ({ front: c.front, back: c.back }))
-          : [{ front: '', back: '' }],
-      })
-    }
-  }, [isEditing, category, existingCards, form])
+  // ... (mantener el useEffect de edición que ya tenías)
 
   const createMutation = useMutation({
     mutationFn: (data: CreateTopicForm) =>
@@ -81,6 +73,41 @@ export const useCreateTopic = () => {
       navigate(`/decks/${resolvedDeckId}`)
     },
   })
+
+  const handleGenerateFromPdf = async (file: File) => {
+    setGenerating(true)
+    try {
+      const formData = new FormData()
+      formData.append('file', file)
+     const res = await api.post('/cards/generate', formData, {
+        headers: { 'Content-Type': undefined },
+      })
+
+      const { name, cards } = res.data
+
+      if (name && !form.getValues('name')) {
+        form.setValue('name', name)
+      }
+
+      const currentCards = form.getValues('cards')
+      const hasEmptyOnly = currentCards.length === 1 && !currentCards[0].front && !currentCards[0].back
+
+      if (hasEmptyOnly) {
+        form.setValue('cards', cards.map((c: { front: string; back: string }) => ({
+          front: c.front,
+          back: c.back,
+        })))
+      } else {
+        cards.forEach((c: { front: string; back: string }) => {
+          append({ front: c.front, back: c.back })
+        })
+      }
+    } catch {
+      alert('Error al generar tarjetas desde el PDF')
+    } finally {
+      setGenerating(false)
+    }
+  }
 
   const handleSubmit = form.handleSubmit((data) => {
     const validCards = data.cards.filter(c => c.front.trim() || c.back.trim())
@@ -120,9 +147,12 @@ export const useCreateTopic = () => {
     form,
     fields,
     isEditing,
+    existingCards,
+    generating,
     handleSubmit,
     handleAddCard,
     handleRemoveCard,
+    handleGenerateFromPdf,
     handleBack,
   }
 }

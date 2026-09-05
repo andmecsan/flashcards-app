@@ -16,6 +16,7 @@ export const CardRow = styled.div`
 
 export const CardInputs = styled.div`
   flex: 1;
+  flex-direction: column;
   display: flex;
   gap: 0.75rem;
 `
@@ -72,4 +73,8 @@ export const ErrorMessage = styled.p`
   font-size: 0.8125rem;
   color: ${({ theme }) => theme.colors.danger};
   text-align: center;
+`
+
+export const HiddenInput = styled.input`
+  display: none;
 `

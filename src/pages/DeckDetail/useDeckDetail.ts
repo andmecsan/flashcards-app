@@ -12,7 +12,6 @@ export const useDeckDetail = () => {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
   const [search, setSearch] = useState('')
-  const [showImport, setShowImport] = useState(false)
   const [deleteId, setDeleteId] = useState<number | null>(null)
   const debouncedSearch = useDebounce(search)
 
@@ -68,8 +67,6 @@ const { data: categories = [], isLoading } = useQuery<Category[]>({
     handleDelete,
     confirmDelete,
     handleCategoryClick,
-    handleBack,
-    showImport,
-    setShowImport
+    handleBack
   }
 }

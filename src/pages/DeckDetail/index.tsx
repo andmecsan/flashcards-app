@@ -1,10 +1,9 @@
-import { Search, Plus, Play, Upload } from "lucide-react";
+import { Search, Plus, Play } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Layout } from "../../components/Layout";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
 import { Card } from "../../components/Card";
-import { Breadcrumb } from "../../components/Breadcrumb";
 import { Loader } from "../../components/Loader";
 import { ConfirmModal } from "../../components/ConfirmModal";
 import { useDeckDetail } from "./useDeckDetail";
@@ -15,7 +14,6 @@ import {
   EmptyState,
   ButtonGroup,
 } from "./styles";
-import { ImportPdfModal } from "../ImportPdfModal";
 import { DeckStats } from "../../components/DeckStats";
 
 export const DeckDetail = () => {
@@ -32,8 +30,6 @@ export const DeckDetail = () => {
     handleDelete,
     confirmDelete,
     handleBack,
-    showImport,
-    setShowImport,
   } = useDeckDetail();
 
   if (loading)
@@ -44,13 +40,12 @@ export const DeckDetail = () => {
     );
 
   return (
-    <Layout>
-      <Breadcrumb
-        items={[
-          { label: "Home", onClick: handleBack },
-          { label: deck?.name || "" },
-        ]}
-      />
+    <Layout
+      breadcrumb={[
+        { label: "Home", onClick: handleBack },
+        { label: deck?.name || "" },
+      ]}
+    >
       {stats && deck && <DeckStats stats={stats} deckId={deck.id} />}
       <Toolbar>
         <SearchWrapper>
@@ -73,15 +68,7 @@ export const DeckDetail = () => {
             icon={<Plus size={18} />}
             onClick={() => navigate(`/decks/${deck?.id}/new-topic`)}
           >
-            Añadir categoría
-          </Button>
-          <Button
-            $soft
-            $variant="primary"
-            icon={<Upload size={18} />}
-            onClick={() => setShowImport(true)}
-          >
-            Importar PDF
+            Añadir temario
           </Button>
         </ButtonGroup>
       </Toolbar>
@@ -119,9 +106,6 @@ export const DeckDetail = () => {
           onConfirm={confirmDelete}
           onClose={() => setDeleteId(null)}
         />
-      )}
-      {showImport && deck && (
-        <ImportPdfModal deckId={deck.id} onClose={() => setShowImport(false)} />
       )}
     </Layout>
   );

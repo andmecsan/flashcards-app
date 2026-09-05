@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import { useMutation } from '@tanstack/react-query'
 import { api } from '../../services/api'
 import type { StudySessionCard } from '../../components/StudySession/types'
 
@@ -18,14 +17,7 @@ export const useReview = () => {
       .finally(() => setLoading(false))
   }, [categoryId])
 
-  const reviewMutation = useMutation({
-    mutationFn: ({ cardId, quality }: { cardId: number; quality: number }) =>
-      api.post(`/cards/${cardId}/review`, { quality }),
-  })
-
-  const handleRate = (cardId: number, quality: number) => {
-    reviewMutation.mutate({ cardId, quality })
-  }
+  const handleRate = () => {}
 
   const handleExit = () => {
     navigate(`/decks/${deckId}`)

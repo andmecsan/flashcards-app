@@ -65,15 +65,8 @@ export const DeckStats = ({ stats, deckId }: DeckStatsProps) => {
             {stats.next_review.category_name} — {stats.next_review.due_count}{" "}
             pendientes
           </ReviewInfo>
-          <Button
-            $size="sm"
-            onClick={() =>
-              navigate(
-                `/decks/${deckId}/review/${stats.next_review!.category_id}`,
-              )
-            }
-          >
-            Repasar
+          <Button $size="sm" onClick={() => navigate(`/study/${deckId}`)}>
+            Estudiar
           </Button>
         </ReviewBanner>
       )}
