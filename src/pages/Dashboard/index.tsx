@@ -11,6 +11,7 @@ import { CreateDeckModal } from "../CreateDeckModal";
 import { useDashboard } from "./useDashboard";
 import { Toolbar, SearchWrapper, Title, Grid, EmptyState } from "./styles";
 import { ProgressBar } from "../../components/ProgressBar";
+import { Pagination } from "../../components/Pagination";
 
 export const Dashboard = () => {
   const {
@@ -21,13 +22,18 @@ export const Dashboard = () => {
     loading,
     fetching,
     showModal,
+    setShowModal,
     editDeck,
     setEditDeck,
-    setShowModal,
     deleteId,
     setDeleteId,
     handleDelete,
     confirmDelete,
+    highlightedId,
+    handleCreated,
+    page,
+    totalPages,
+    handlePageChange,
   } = useDashboard();
   const navigate = useNavigate();
 
@@ -63,6 +69,7 @@ export const Dashboard = () => {
         <Grid>
           {decks.map((deck) => (
             <Card
+              $highlighted={deck.id === highlightedId}
               key={deck.id}
               title={deck.name}
               subtitle={`${deck.card_count} tarjetas`}
@@ -92,10 +99,23 @@ export const Dashboard = () => {
           </p>
         </EmptyState>
       )}
-
-      {showModal && <CreateDeckModal onClose={() => setShowModal(false)} />}
+      <Pagination
+        page={page}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
+      {showModal && (
+        <CreateDeckModal
+          onClose={() => setShowModal(false)}
+          onCreated={handleCreated}
+        />
+      )}
       {editDeck && (
-        <CreateDeckModal deck={editDeck} onClose={() => setEditDeck(null)} />
+        <CreateDeckModal
+          deck={editDeck}
+          onClose={() => setEditDeck(null)}
+          onCreated={handleCreated}
+        />
       )}
 
       {deleteId && (

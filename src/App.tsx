@@ -1,4 +1,5 @@
 import { ThemeProvider } from "styled-components";
+import { Toaster } from "react-hot-toast";
 import { theme } from "./styles/theme";
 import { GlobalStyle } from "../src/styles/global";
 import { Login } from "./pages/Login";
@@ -13,6 +14,7 @@ import { Study } from "./pages/Study";
 import { Review } from "./pages/Review";
 import { Profile } from "./pages/Profile";
 import { FAQ } from "./pages/FAQ";
+import { EditTopic } from "./pages/EditTopic";
 
 function App() {
   const queryClient = new QueryClient();
@@ -28,6 +30,23 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 4000,
+            style: {
+              fontFamily: "'Mulish', sans-serif",
+              fontSize: "0.875rem",
+              borderRadius: "0.625rem",
+            },
+            success: {
+              style: { background: "#E1F5EE", color: "#0F6E56" },
+            },
+            error: {
+              style: { background: "#FCEBEB", color: "#E24B4A" },
+            },
+          }}
+        />
         <BrowserRouter>
           <Routes>
             <Route
@@ -62,7 +81,7 @@ function App() {
             />
             <Route
               path="/categories/:categoryId/edit"
-              element={token ? <CreateTopic /> : <Navigate to="/login" />}
+              element={token ? <EditTopic /> : <Navigate to="/login" />}
             />
             <Route
               path="/study/:deckId"

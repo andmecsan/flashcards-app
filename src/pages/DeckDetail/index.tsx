@@ -14,6 +14,7 @@ import {
   ButtonGroup,
 } from "./styles";
 import { DeckStats } from "../../components/DeckStats";
+import { Pagination } from "../../components/Pagination";
 
 export const DeckDetail = () => {
   const navigate = useNavigate();
@@ -29,6 +30,9 @@ export const DeckDetail = () => {
     handleDelete,
     confirmDelete,
     handleBack,
+    totalPages,
+    page,
+    handlePageChange,
   } = useDeckDetail();
 
   return (
@@ -91,7 +95,11 @@ export const DeckDetail = () => {
           </p>
         </EmptyState>
       )}
-
+      <Pagination
+        page={page}
+        totalPages={totalPages}
+        onPageChange={handlePageChange}
+      />
       {deleteId && (
         <ConfirmModal
           title="Eliminar categoría"

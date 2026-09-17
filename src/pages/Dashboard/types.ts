@@ -10,3 +10,8 @@ export interface Deck {
   new_cards: number
   created_at: string
 }
+
+export interface DecksResponse {
+  decks: Deck[]
+  meta: { page: number; per_page: number; total: number; total_pages: number }
+}
