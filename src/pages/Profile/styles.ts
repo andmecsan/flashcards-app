@@ -65,13 +65,6 @@ export const Form = styled.div`
   gap: 1rem;
 `
 
-export const SuccessText = styled.p`
-  font-family: ${({ theme }) => theme.fonts.main};
-  font-size: 0.8125rem;
-  color: ${({ theme }) => theme.colors.success};
-  text-align: center;
-`
-
 export const ErrorText = styled.p`
   font-family: ${({ theme }) => theme.fonts.main};
   font-size: 0.8125rem;

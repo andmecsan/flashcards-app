@@ -8,8 +8,16 @@ import type { CreateDeckModalProps } from "./types";
 import { Form } from "./styles";
 import { EmojiPicker } from "../../components/EmojiPicker";
 
-export const CreateDeckModal = ({ onClose, deck }: CreateDeckModalProps) => {
-  const { form, handleSubmit, isEditing } = useCreateDeck(onClose, deck);
+export const CreateDeckModal = ({
+  onClose,
+  deck,
+  onCreated,
+}: CreateDeckModalProps) => {
+  const { form, handleSubmit, isEditing, serverError } = useCreateDeck(
+    onClose,
+    onCreated,
+    deck,
+  );
 
   return (
     <Modal title={isEditing ? "Editar mazo" : "Nuevo mazo"} onClose={onClose}>
@@ -24,7 +32,7 @@ export const CreateDeckModal = ({ onClose, deck }: CreateDeckModalProps) => {
           registration={form.register("name", {
             required: "El nombre es obligatorio",
           })}
-          error={form.formState.errors.name?.message}
+          error={form.formState.errors.name?.message || serverError}
         />
         <ColorPicker
           value={form.watch("color")}

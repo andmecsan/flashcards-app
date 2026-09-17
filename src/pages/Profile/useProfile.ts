@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { api } from '../../services/api'
 import type { ProfileData } from './types'
+import toast from 'react-hot-toast'
 
 interface PasswordForm {
   current_password: string
@@ -13,7 +14,7 @@ interface PasswordForm {
 export const useProfile = () => {
   const navigate = useNavigate()
   const [showDelete, setShowDelete] = useState(false)
-  const [successMessage, setSuccessMessage] = useState('')
+
 
   const { data: profile, isLoading } = useQuery<ProfileData>({
     queryKey: ['profile'],
@@ -27,19 +28,19 @@ export const useProfile = () => {
   const updateMutation = useMutation({
     mutationFn: (data: PasswordForm) => api.patch('/profile', data),
     onSuccess: () => {
-      passwordForm.reset()
-      setSuccessMessage('Contraseña actualizada correctamente')
-      setTimeout(() => setSuccessMessage(''), 3000)
-    },
+    passwordForm.reset()
+    toast.success('Contraseña actualizada correctamente')
+  },
   })
 
   const deleteMutation = useMutation({
     mutationFn: () => api.delete('/profile'),
     onSuccess: () => {
       localStorage.removeItem('token')
+      toast.success('Cuenta eliminada')
       navigate('/login')
       window.location.reload()
-    },
+},
   })
 
   const handleChangePassword = passwordForm.handleSubmit((data) => {
@@ -55,7 +56,6 @@ export const useProfile = () => {
     loading: isLoading,
     passwordForm,
     showDelete, setShowDelete,
-    successMessage,
     passwordError: updateMutation.error ? 'Contraseña actual incorrecta' : '',
     handleChangePassword,
     handleDelete,

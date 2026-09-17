@@ -14,7 +14,6 @@ import {
   InfoValue,
   Badge,
   Form,
-  SuccessText,
   ErrorText,
   DangerSection,
   DangerText,
@@ -29,7 +28,6 @@ export const Profile = () => {
     passwordForm,
     showDelete,
     setShowDelete,
-    successMessage,
     passwordError,
     handleChangePassword,
     handleDelete,
@@ -106,7 +104,6 @@ export const Profile = () => {
               error={passwordForm.formState.errors.password?.message}
             />
             {passwordError && <ErrorText>{passwordError}</ErrorText>}
-            {successMessage && <SuccessText>{successMessage}</SuccessText>}
             <Button onClick={handleChangePassword}>
               {profile.has_password
                 ? "Cambiar contraseña"
