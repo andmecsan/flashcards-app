@@ -2,15 +2,16 @@ import { User, LogOut, HelpCircle } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Logo } from "../Logo";
 import { Button } from "../Button";
+import { useAuth } from "../../context/useAuth";
 import { Nav, NavActions, NavItem, Separator } from "./styles";
 
 export const Navbar = () => {
   const navigate = useNavigate();
+  const { logout } = useAuth();
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    logout();
     navigate("/login");
-    window.location.reload();
   };
 
   return (

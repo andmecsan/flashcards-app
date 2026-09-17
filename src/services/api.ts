@@ -1,9 +1,13 @@
 import axios from 'axios'
 
-const API_URL = 'http://localhost:3000/api/v1'
+const API_ROOT = 'http://localhost:3000'
+
+export const authApi = axios.create({
+  baseURL: API_ROOT,
+})
 
 export const api = axios.create({
-  baseURL: API_URL,
+  baseURL: `${API_ROOT}/api/v1`,
   headers: {
     'Content-Type': 'application/json',
   },

@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { AxiosError } from 'axios'
 import { api } from '../../services/api'
+import { getApiErrorMessage } from '../../utils/apiError'
 import type { DeckFormData } from './types'
 import toast from 'react-hot-toast'
 
@@ -29,8 +29,8 @@ export const useCreateDeck = (onClose: () => void, onCreated?: (id: number) => v
     toast.success('Mazo creado correctamente')
     onClose()
   },
-  onError: (error: AxiosError<{ errors: string[] }>) => {
-    const message = error.response?.data?.errors?.[0] || 'Error al crear el mazo'
+  onError: (error: unknown) => {
+    const message = getApiErrorMessage(error, 'Error al crear el mazo')
     setServerError(message)
     toast.error(message)
   },
@@ -46,8 +46,8 @@ export const useCreateDeck = (onClose: () => void, onCreated?: (id: number) => v
     toast.success('Mazo actualizado correctamente')
     onClose()
   },
-  onError: (error: AxiosError<{ errors: string[] }>) => {
-    const message = error.response?.data?.errors?.[0] || 'Error al guardar los cambios'
+  onError: (error: unknown) => {
+    const message = getApiErrorMessage(error, 'Error al guardar los cambios')
     setServerError(message)
     toast.error(message)
   },

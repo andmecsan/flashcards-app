@@ -3,10 +3,10 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useForm, useFieldArray } from 'react-hook-form'
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query'
 import { api } from '../../services/api'
+import { getApiErrorMessage } from '../../utils/apiError'
 import type { CreateTopicForm, CardItem } from '../CreateTopic/types'
 import type { Deck } from '../Dashboard/types'
 import type { Category } from '../DeckDetail/types'
-import type { AxiosError } from 'axios'
 import toast from 'react-hot-toast'
 
 export const useEditTopic = () => {
@@ -69,8 +69,8 @@ export const useEditTopic = () => {
     toast.success('Tema actualizado correctamente')
     navigate(`/decks/${deckId}`)
     },
-    onError: (error: AxiosError<{ errors: string[] }>) => {
-    const message = error.response?.data?.errors?.[0] || 'Error al guardar los cambios'
+    onError: (error: unknown) => {
+    const message = getApiErrorMessage(error, 'Error al guardar los cambios')
     setServerError(message)
     toast.error(message)
     },

@@ -3,9 +3,9 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useForm, useFieldArray } from 'react-hook-form'
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query'
 import { api } from '../../services/api'
+import { getApiErrorMessage } from '../../utils/apiError'
 import type { CreateTopicForm } from './types'
 import type { Deck } from '../Dashboard/types'
-import type { AxiosError } from 'axios'
 import toast from 'react-hot-toast'
 
 export const useCreateTopic = () => {
@@ -44,8 +44,8 @@ export const useCreateTopic = () => {
     toast.success('Tema creado correctamente')
     navigate(`/decks/${deckId}`)
   },
-  onError: (error: AxiosError<{ errors: string[] }>) => {
-    const message = error.response?.data?.errors?.[0] || 'Error al crear el tema'
+  onError: (error: unknown) => {
+    const message = getApiErrorMessage(error, 'Error al crear el tema')
     setServerError(message)
     toast.error(message)
   }

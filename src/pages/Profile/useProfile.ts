@@ -3,6 +3,7 @@ import { useQuery, useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { api } from '../../services/api'
+import { useAuth } from '../../context/useAuth'
 import type { ProfileData } from './types'
 import toast from 'react-hot-toast'
 
@@ -13,6 +14,7 @@ interface PasswordForm {
 
 export const useProfile = () => {
   const navigate = useNavigate()
+  const { logout } = useAuth()
   const [showDelete, setShowDelete] = useState(false)
 
 
@@ -36,11 +38,10 @@ export const useProfile = () => {
   const deleteMutation = useMutation({
     mutationFn: () => api.delete('/profile'),
     onSuccess: () => {
-      localStorage.removeItem('token')
+      logout()
       toast.success('Cuenta eliminada')
       navigate('/login')
-      window.location.reload()
-},
+    },
   })
 
   const handleChangePassword = passwordForm.handleSubmit((data) => {
