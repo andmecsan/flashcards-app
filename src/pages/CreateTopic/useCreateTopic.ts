@@ -4,7 +4,8 @@ import { useForm, useFieldArray } from 'react-hook-form'
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query'
 import { api } from '../../services/api'
 import { getApiErrorMessage } from '../../utils/apiError'
-import type { CreateTopicForm } from './types'
+import { getValidTopicCards } from '../../utils/topicCards'
+import type { CreateTopicForm } from '../../components/TopicForm/types'
 import type { Deck } from '../Dashboard/types'
 import toast from 'react-hot-toast'
 
@@ -88,18 +89,8 @@ export const useCreateTopic = () => {
 
   const handleSubmit = form.handleSubmit((data) => {
     setServerError('')
-    const validCards = data.cards.filter(c => c.front.trim() || c.back.trim())
-    const invalidCards = validCards.some(c => !c.front.trim() || !c.back.trim())
-
-    if (invalidCards) {
-      form.setError('cards', { message: 'Todas las tarjetas deben tener pregunta y respuesta' })
-      return
-    }
-
-    if (validCards.length === 0) {
-      form.setError('cards', { message: 'Añade al menos una tarjeta' })
-      return
-    }
+    const validCards = getValidTopicCards(form, data.cards)
+    if (!validCards) return
 
     createMutation.mutate({ ...data, cards: validCards })
   })
