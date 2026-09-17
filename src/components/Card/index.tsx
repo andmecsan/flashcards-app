@@ -15,6 +15,7 @@ import type { CardProps } from "./types";
 export const Card = ({
   $variant = "default",
   title,
+  $highlighted = false,
   subtitle,
   badge,
   icon,
@@ -32,7 +33,7 @@ export const Card = ({
   };
 
   return (
-    <Wrapper $variant={$variant} onClick={onClick}>
+    <Wrapper $variant={$variant} onClick={onClick} $highlighted={$highlighted}>
       <Content $variant={$variant}>
         {hasActions && (
           <Actions $variant={$variant}>

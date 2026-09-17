@@ -1,6 +1,12 @@
-import styled, { css } from 'styled-components'
+import styled, { css, keyframes } from 'styled-components'
 
-export const Wrapper = styled.div<{ $variant: 'default' | 'stacked' }>`
+const highlight = keyframes`
+  0%, 30% { box-shadow: 0 0 0 0.25rem rgba(124, 58, 237, 0.5); }
+  100% { box-shadow: 0 0 0 0 rgba(124, 58, 237, 0); }
+`
+
+
+export const Wrapper = styled.div<{ $variant: 'default' | 'stacked'; $highlighted?: boolean  }>`
   position: relative;
   cursor: pointer;
   transition: transform 0.15s;
@@ -8,6 +14,12 @@ export const Wrapper = styled.div<{ $variant: 'default' | 'stacked' }>`
   &:hover {
     transform: translateY(-0.125rem);
   }
+
+  ${({ $highlighted }) => $highlighted && css`
+    animation: ${highlight} 2.5s ease-out 1 forwards;
+    border-radius: ${({ theme }) => theme.radii.lg};
+  `}
+
 ${({ $variant }) => $variant === 'stacked' && css`
   padding-top: 0.75rem;
   padding-right: 0.75rem;

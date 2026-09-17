@@ -1,5 +1,6 @@
 export interface CardProps {
   $variant?: 'default' | 'stacked'
+  $highlighted?: boolean
   title: string
   subtitle?: string
   badge?: string
