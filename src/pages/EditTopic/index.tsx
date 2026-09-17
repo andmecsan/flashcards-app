@@ -1,11 +1,9 @@
-import { useRef } from "react";
-import { Plus, Trash2, Sparkles } from "lucide-react";
+import { Plus, Trash2 } from "lucide-react";
 import { Layout } from "../../components/Layout";
 import { Input } from "../../components/Input";
 import { TextArea } from "../../components/TextArea";
 import { Button } from "../../components/Button";
-import { Loader } from "../../components/Loader";
-import { useCreateTopic } from "./useCreateTopic";
+import { useEditTopic } from "./useEditTopic";
 import {
   FormWrapper,
   CardRow,
@@ -16,55 +14,26 @@ import {
   SectionTitle,
   Actions,
   ErrorMessage,
-  HiddenInput,
-  SectionHeader,
-} from "./styles";
+} from "../CreateTopic/styles";
 
-export const CreateTopic = () => {
+export const EditTopic = () => {
   const {
     deck,
     form,
     fields,
-    generating,
     serverError,
     handleSubmit,
     handleAddCard,
     handleRemoveCard,
-    handleGenerateFromPdf,
     handleBack,
-  } = useCreateTopic();
-  const fileRef = useRef<HTMLInputElement>(null);
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file && file.type === "application/pdf") {
-      handleGenerateFromPdf(file);
-    }
-    e.target.value = "";
-  };
-
-  if (generating) {
-    return (
-      <Layout
-        breadcrumb={[
-          { label: "Home", onClick: () => (window.location.href = "/") },
-          { label: deck?.name || "", onClick: handleBack },
-          { label: "Nuevo tema" },
-        ]}
-      >
-        <FormWrapper>
-          <Loader message="La IA está generando las tarjetas..." />
-        </FormWrapper>
-      </Layout>
-    );
-  }
+  } = useEditTopic();
 
   return (
     <Layout
       breadcrumb={[
         { label: "Home", onClick: () => (window.location.href = "/") },
         { label: deck?.name || "", onClick: handleBack },
-        { label: "Nuevo tema" },
+        { label: "Editar tema" },
       ]}
     >
       <FormWrapper>
@@ -79,23 +48,7 @@ export const CreateTopic = () => {
 
         <Divider />
 
-        <SectionHeader>
-          <SectionTitle>Tarjetas</SectionTitle>
-          <Button
-            $variant="primary"
-            $size="sm"
-            icon={<Sparkles size={16} />}
-            onClick={() => fileRef.current?.click()}
-          >
-            Crear con IA
-          </Button>
-          <HiddenInput
-            ref={fileRef}
-            type="file"
-            accept=".pdf"
-            onChange={handleFileChange}
-          />
-        </SectionHeader>
+        <SectionTitle>Tarjetas</SectionTitle>
 
         {fields.map((field, index) => (
           <CardRow key={field.id}>
@@ -143,7 +96,7 @@ export const CreateTopic = () => {
           <Button $variant="ghost" onClick={handleBack}>
             Cancelar
           </Button>
-          <Button onClick={handleSubmit}>Guardar tema</Button>
+          <Button onClick={handleSubmit}>Guardar cambios</Button>
         </Actions>
       </FormWrapper>
     </Layout>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { LogOut, SkipForward } from "lucide-react";
 import { Button } from "../Button";
 import { Loader } from "../Loader";
@@ -61,6 +61,21 @@ export const StudySession = ({
     onRate(currentCard.id, quality);
     handleNext();
   };
+
+  const handleKeyDown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.code === "Space") {
+        e.preventDefault();
+        handleFlip();
+      }
+    },
+    [isFlipped],
+  );
+
+  useEffect(() => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [handleKeyDown]);
 
   if (loading)
     return (

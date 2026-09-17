@@ -7,6 +7,7 @@ export const Study = () => {
   return (
     <StudySession
       cards={cards}
+      showRatings
       loading={loading}
       onRate={handleRate}
       onExit={handleExit}

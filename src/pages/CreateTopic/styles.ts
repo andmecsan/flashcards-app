@@ -1,5 +1,11 @@
 import styled from 'styled-components'
 
+export const SectionHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
 export const FormWrapper = styled.div`
   max-width: 40rem;
   margin: 0 auto;

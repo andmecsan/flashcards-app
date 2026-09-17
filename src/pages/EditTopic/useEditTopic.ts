@@ -1,19 +1,31 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useForm, useFieldArray } from 'react-hook-form'
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query'
 import { api } from '../../services/api'
-import type { CreateTopicForm } from './types'
+import type { CreateTopicForm, CardItem } from '../CreateTopic/types'
 import type { Deck } from '../Dashboard/types'
+import type { Category } from '../DeckDetail/types'
 import type { AxiosError } from 'axios'
 import toast from 'react-hot-toast'
 
-export const useCreateTopic = () => {
-  const { deckId } = useParams<{ deckId: string }>()
+export const useEditTopic = () => {
+  const { categoryId } = useParams<{ categoryId: string }>()
   const navigate = useNavigate()
   const queryClient = useQueryClient()
-  const [generating, setGenerating] = useState(false)
   const [serverError, setServerError] = useState('')
+
+  const { data: category } = useQuery<Category>({
+    queryKey: ['category', categoryId],
+    queryFn: () => api.get(`/categories/${categoryId}`).then(res => res.data),
+  })
+
+  const { data: existingCards } = useQuery<CardItem[]>({
+    queryKey: ['cards', categoryId],
+    queryFn: () => api.get(`/categories/${categoryId}/cards`).then(res => res.data),
+  })
+
+  const deckId = category?.deck_id?.toString()
 
   const { data: deck } = useQuery<Deck>({
     queryKey: ['deck', deckId],
@@ -33,58 +45,36 @@ export const useCreateTopic = () => {
     name: 'cards',
   })
 
-  const createMutation = useMutation({
+  useEffect(() => {
+    if (category && existingCards) {
+      form.reset({
+        name: category.name,
+        cards: existingCards.length > 0
+          ? existingCards.map(c => ({ front: c.front, back: c.back }))
+          : [{ front: '', back: '' }],
+      })
+    }
+  }, [category, existingCards, form])
+
+  const updateMutation = useMutation({
     mutationFn: (data: CreateTopicForm) =>
-      api.post(`/decks/${deckId}/create_topic`, {
+      api.patch(`/categories/${categoryId}/update_topic`, {
         name: data.name,
         cards: data.cards.filter(c => c.front.trim() && c.back.trim()),
       }),
-      onSuccess: () => {
+    onSuccess: () => {
     queryClient.invalidateQueries({ queryKey: ['categories', deckId] })
-    toast.success('Tema creado correctamente')
+    queryClient.invalidateQueries({ queryKey: ['category', categoryId] })
+    queryClient.invalidateQueries({ queryKey: ['cards', categoryId] })
+    toast.success('Tema actualizado correctamente')
     navigate(`/decks/${deckId}`)
-  },
-  onError: (error: AxiosError<{ errors: string[] }>) => {
-    const message = error.response?.data?.errors?.[0] || 'Error al crear el tema'
+    },
+    onError: (error: AxiosError<{ errors: string[] }>) => {
+    const message = error.response?.data?.errors?.[0] || 'Error al guardar los cambios'
     setServerError(message)
     toast.error(message)
-  }
-    })
-
-  const handleGenerateFromPdf = async (file: File) => {
-    setGenerating(true)
-    try {
-      const formData = new FormData()
-      formData.append('file', file)
-      const res = await api.post('/cards/generate', formData, {
-        headers: { 'Content-Type': undefined },
-      })
-
-      const { name, cards } = res.data
-
-      if (name && !form.getValues('name')) {
-        form.setValue('name', name)
-      }
-
-      const currentCards = form.getValues('cards')
-      const hasEmptyOnly = currentCards.length === 1 && !currentCards[0].front && !currentCards[0].back
-
-      if (hasEmptyOnly) {
-        form.setValue('cards', cards.map((c: { front: string; back: string }) => ({
-          front: c.front,
-          back: c.back,
-        })))
-      } else {
-        cards.forEach((c: { front: string; back: string }) => {
-          append({ front: c.front, back: c.back })
-        })
-      }
-    } catch {
-      toast.error('Error al generar tarjetas desde el PDF')
-    } finally {
-      setGenerating(false)
-    }
-  }
+    },
+  })
 
   const handleSubmit = form.handleSubmit((data) => {
     setServerError('')
@@ -101,7 +91,7 @@ export const useCreateTopic = () => {
       return
     }
 
-    createMutation.mutate({ ...data, cards: validCards })
+    updateMutation.mutate({ ...data, cards: validCards })
   })
 
   const handleAddCard = () => append({ front: '', back: '' })
@@ -116,12 +106,10 @@ export const useCreateTopic = () => {
     deck,
     form,
     fields,
-    generating,
     serverError,
     handleSubmit,
     handleAddCard,
     handleRemoveCard,
-    handleGenerateFromPdf,
     handleBack,
   }
 }
