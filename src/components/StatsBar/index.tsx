@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Flame, Clock, Zap } from "lucide-react";
 import { useTheme } from "styled-components";
 import { Button } from "../Button";
@@ -16,9 +17,10 @@ import {
 
 export const StatsBar = ({ stats, onStudy }: StatsBarProps) => {
   const theme = useTheme();
+  const [now] = useState(() => Date.now());
 
   const timeAgo = (dateStr: string) => {
-    const diff = Date.now() - new Date(dateStr).getTime();
+    const diff = now - new Date(dateStr).getTime();
     const hours = Math.floor(diff / 3600000);
     if (hours < 1) return "hace menos de 1h";
     if (hours < 24) return `hace ${hours}h`;
