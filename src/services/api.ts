@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_ROOT = 'http://localhost:3000'
+const API_ROOT = import.meta.env.VITE_API_ROOT || 'http://localhost:3000'
 
 export const authApi = axios.create({
   baseURL: API_ROOT,

@@ -7,7 +7,7 @@ export const SectionHeader = styled.div`
 `
 
 export const FormWrapper = styled.div`
-  max-width: 40rem;
+  width: 100%;
   margin: 0 auto;
   display: flex;
   flex-direction: column;

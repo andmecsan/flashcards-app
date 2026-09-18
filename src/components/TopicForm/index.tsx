@@ -141,7 +141,7 @@ export const TopicForm = ({
           <Button $variant="ghost" onClick={handleBack}>
             Cancelar
           </Button>
-          <Button onClick={handleSubmit}>
+          <Button onClick={handleSubmit} $variant="secondary">
             {mode === "create" ? "Guardar tema" : "Guardar cambios"}
           </Button>
         </Actions>
