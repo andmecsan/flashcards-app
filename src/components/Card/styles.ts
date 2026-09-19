@@ -163,6 +163,11 @@ export const ActionButton = styled.button<{ $danger?: boolean }>`
   background: ${({ theme }) => theme.colors.primaryHover};
   color: ${({ theme }) => theme.colors.surface};
 
+  @media (pointer: coarse) {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
   &:hover {
     background: ${({ $danger, theme }) => $danger ? theme.colors.danger : theme.colors.primaryLight};
     color: ${({ $danger, theme }) => $danger ? theme.colors.surface : theme.colors.primary};

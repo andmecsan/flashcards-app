@@ -47,7 +47,7 @@ export const DeckDetail = () => {
       <Toolbar>
         <SearchWrapper>
           <Input
-            placeholder="Buscar categorías..."
+            placeholder="Buscar temarios..."
             value={search}
             onChange={setSearch}
             icon={<Search size={18} />}
@@ -90,8 +90,8 @@ export const DeckDetail = () => {
         <EmptyState>
           <p>
             {search
-              ? "No hay categorías que coincidan"
-              : "Aún no hay categorías. ¡Crea la primera!"}
+              ? "No hay temarios que coincidan"
+              : "Aún no hay temarios. ¡Crea el primero!"}
           </p>
         </EmptyState>
       )}
@@ -102,8 +102,8 @@ export const DeckDetail = () => {
       />
       {deleteId && (
         <ConfirmModal
-          title="Eliminar categoría"
-          message="¿Estás seguro? Se eliminarán todas las tarjetas de esta categoría."
+          title="Eliminar temario"
+          message="¿Estás seguro? Se eliminarán todas las tarjetas de este temario."
           onConfirm={confirmDelete}
           onClose={() => setDeleteId(null)}
         />

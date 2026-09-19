@@ -40,6 +40,10 @@ export const StyledInput = styled.input<{ $hasIcon?: boolean; $hasError?: boolea
   background: ${({ theme }) => theme.colors.surface};
   transition: border-color 0.15s;
 
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 1rem;
+  }
+
   &:focus {
     outline: none;
     border-color: ${({ theme }) => theme.colors.primary};

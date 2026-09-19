@@ -115,7 +115,7 @@ export const Profile = () => {
         <DangerSection>
           <SectionTitle>Zona peligrosa</SectionTitle>
           <DangerText>
-            Al eliminar tu cuenta se borrarán todos tus mazos, categorías,
+            Al eliminar tu cuenta se borrarán todas tus asignaturas, temarios,
             tarjetas y progreso de estudio. Esta acción no se puede deshacer.
           </DangerText>
           <Button $variant="danger" onClick={() => setShowDelete(true)}>

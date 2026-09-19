@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 export const Content = styled.div`
+  width: 100%;
   max-width: 32rem;
   margin: 0 auto;
   display: flex;
@@ -13,6 +14,10 @@ export const Section = styled.div`
   border-radius: ${({ theme }) => theme.radii.lg};
   padding: 1.5rem;
   box-shadow: 0 0.0625rem 0.25rem ${({ theme }) => theme.colors.border};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 1.25rem;
+  }
 `
 
 export const SectionTitle = styled.h3`
@@ -27,6 +32,8 @@ export const InfoRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
   padding: 0.75rem 0;
   border-bottom: 1px solid ${({ theme }) => theme.colors.border};
 

@@ -19,6 +19,10 @@ export const Card = styled.div`
   flex-direction: column;
   align-items: center;
   box-shadow: 0 0.25rem 1.5rem rgba(0, 0, 0, 0.08);
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 2rem 1.25rem;
+  }
 `
 
 export const Subtitle = styled.p`

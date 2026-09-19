@@ -163,7 +163,7 @@ export const FAQ = () => {
               >
                 <ModeTitle $color={theme.colors.primary}>Repasar</ModeTitle>
                 <ModeDesc>
-                  Muestra todas las tarjetas de una categoría, estén pendientes
+                  Muestra todas las tarjetas de un temario, estén pendientes
                   o no. Tus calificaciones no afectan al algoritmo — es un modo
                   libre para refrescar antes de un examen o simplemente navegar
                   tus tarjetas sin alterar la planificación.
@@ -194,7 +194,7 @@ export const FAQ = () => {
               </Paragraph>
               <Paragraph>
                 <Highlight>Barra de progreso: </Highlight> muestra tres niveles
-                para cada mazo: tarjetas dominadas (morado), en progreso
+                para cada asignatura: tarjetas dominadas (morado), en progreso
                 (amarillo) y nuevas (gris). Así ves de un vistazo dónde vas bien
                 y dónde necesitas más práctica.
               </Paragraph>

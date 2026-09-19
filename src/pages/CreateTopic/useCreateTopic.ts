@@ -80,8 +80,8 @@ export const useCreateTopic = () => {
           append({ front: c.front, back: c.back })
         })
       }
-    } catch {
-      toast.error('Error al generar tarjetas desde el PDF')
+    } catch (error) {
+      toast.error(getApiErrorMessage(error, 'Error al generar tarjetas desde el PDF'))
     } finally {
       setGenerating(false)
     }

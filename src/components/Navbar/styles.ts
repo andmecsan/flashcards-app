@@ -6,6 +6,14 @@ export const Nav = styled.nav`
   justify-content: space-between;
   padding: 1rem 2rem;
   background: ${({ theme }) => theme.colors.surface};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding: 0.875rem 1.5rem;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 0.75rem 1rem;
+  }
 `
 
 export const NavActions = styled.div`
@@ -38,6 +46,12 @@ export const NavItem = styled.div`
 
   &:hover::after {
     opacity: 1;
+  }
+
+  @media (hover: none) {
+    &::after {
+      display: none;
+    }
   }
 `
 

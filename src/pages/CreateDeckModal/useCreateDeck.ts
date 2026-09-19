@@ -26,11 +26,11 @@ export const useCreateDeck = (onClose: () => void, onCreated?: (id: number) => v
     queryClient.invalidateQueries({ queryKey: ['stats'] })
     form.reset()
     onCreated?.(res.data.id)
-    toast.success('Mazo creado correctamente')
+    toast.success('Asignatura creada correctamente')
     onClose()
   },
   onError: (error: unknown) => {
-    const message = getApiErrorMessage(error, 'Error al crear el mazo')
+    const message = getApiErrorMessage(error, 'Error al crear la asignatura')
     setServerError(message)
     toast.error(message)
   },
@@ -43,7 +43,7 @@ export const useCreateDeck = (onClose: () => void, onCreated?: (id: number) => v
     queryClient.invalidateQueries({ queryKey: ['stats'] })
     form.reset()
     onCreated?.(deck!.id)
-    toast.success('Mazo actualizado correctamente')
+    toast.success('Asignatura actualizada correctamente')
     onClose()
   },
   onError: (error: unknown) => {

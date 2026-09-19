@@ -47,17 +47,17 @@ export const Dashboard = () => {
       )}
 
       <Toolbar>
-        <Title>Mis mazos</Title>
+        <Title>Mis asignaturas</Title>
         <SearchWrapper>
           <Input
-            placeholder="Buscar mazos..."
+            placeholder="Buscar asignaturas..."
             value={search}
             onChange={setSearch}
             icon={<Search size={18} />}
           />
         </SearchWrapper>
         <Button icon={<Plus size={18} />} onClick={() => setShowModal(true)}>
-          Añadir mazo
+          Añadir asignatura
         </Button>
       </Toolbar>
 
@@ -94,8 +94,8 @@ export const Dashboard = () => {
         <EmptyState>
           <p>
             {search
-              ? "No hay mazos que coincidan"
-              : "Aún no tienes mazos. ¡Crea el primero!"}
+              ? "No hay asignaturas que coincidan"
+              : "Aún no tienes asignaturas. ¡Crea la primera!"}
           </p>
         </EmptyState>
       )}
@@ -120,8 +120,8 @@ export const Dashboard = () => {
 
       {deleteId && (
         <ConfirmModal
-          title="Eliminar mazo"
-          message="¿Estás seguro? Se eliminarán todas las categorías y tarjetas de este mazo."
+          title="Eliminar asignatura"
+          message="¿Estás seguro? Se eliminarán todos los temarios y tarjetas de esta asignatura."
           onConfirm={confirmDelete}
           onClose={() => setDeleteId(null)}
         />

@@ -17,7 +17,13 @@ export const Content = styled.div`
   padding: 1.5rem;
   width: 100%;
   max-width: 28rem;
+  max-height: calc(100dvh - 2rem);
+  overflow-y: auto;
   box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.15);
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 1.25rem;
+  }
 `
 
 export const Header = styled.div`

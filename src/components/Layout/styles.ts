@@ -14,4 +14,12 @@ export const Content = styled.main`
   flex: 1;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    padding: 1.5rem;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 1rem;
+  }
 `

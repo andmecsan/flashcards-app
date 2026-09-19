@@ -12,4 +12,12 @@ export const Actions = styled.div`
   display: flex;
   gap: 0.75rem;
   justify-content: flex-end;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    flex-direction: column-reverse;
+
+    > * {
+      width: 100%;
+    }
+  }
 `

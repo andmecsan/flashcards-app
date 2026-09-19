@@ -38,4 +38,13 @@ export const PickerWrapper = styled.div`
   left: 0;
   z-index: 50;
   margin-top: 0.25rem;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 0;
+    max-width: calc(100vw - 1rem);
+  }
 `

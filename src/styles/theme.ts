@@ -39,10 +39,16 @@ export const radii = {
   full: '624.9375rem',
 } as const;
 
+export const breakpoints = {
+  tablet: '64rem',
+  mobile: '40rem',
+} as const;
+
 export const theme = {
   colors,
   fonts,
   radii,
+  breakpoints,
 } as const;
 
 export type ThemeType = typeof theme;

@@ -64,6 +64,8 @@ export const ReviewBanner = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 `
 
 export const ReviewInfo = styled.div`

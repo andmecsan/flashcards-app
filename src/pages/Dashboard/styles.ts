@@ -5,11 +5,23 @@ export const Toolbar = styled.div`
   align-items: center;
   gap: 1rem;
   margin-bottom: 2rem;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
 `
 
 export const SearchWrapper = styled.div`
   flex: 1;
   max-width: 20rem;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    flex-basis: 100%;
+    max-width: none;
+    order: 3;
+  }
 `
 
 export const Title = styled.h2`
@@ -18,11 +30,15 @@ export const Title = styled.h2`
   font-weight: 700;
   color: ${({ theme }) => theme.colors.text};
   margin-right: auto;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 1.25rem;
+  }
 `
 
 export const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(15rem, 100%), 1fr));
   gap: 1.25rem;
 `
 

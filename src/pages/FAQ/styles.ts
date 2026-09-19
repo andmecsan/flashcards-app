@@ -3,8 +3,13 @@ import styled from 'styled-components'
 export const Content = styled.div`
   display: flex;
   gap: 1.5rem;
+  width: 100%;
   max-width: 52rem;
   margin: 0 auto;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    flex-direction: column;
+  }
 `
 
 export const Sidebar = styled.div`
@@ -12,6 +17,13 @@ export const Sidebar = styled.div`
   flex-direction: column;
   gap: 0.375rem;
   min-width: 12rem;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.tablet}) {
+    flex-direction: row;
+    min-width: 0;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+  }
 `
 
 export const Tab = styled.button<{ $active: boolean }>`
@@ -23,6 +35,8 @@ export const Tab = styled.button<{ $active: boolean }>`
   border-radius: ${({ theme }) => theme.radii.md};
   cursor: pointer;
   text-align: left;
+  white-space: nowrap;
+  flex-shrink: 0;
   transition: all 0.15s;
   background: ${({ $active, theme }) => $active ? theme.colors.surface : 'transparent'};
   color: ${({ $active, theme }) => $active ? theme.colors.primary : theme.colors.textMuted};
@@ -36,6 +50,7 @@ export const Tab = styled.button<{ $active: boolean }>`
 
 export const Panel = styled.div`
   flex: 1;
+  min-width: 0;
 `
 
 export const Section = styled.div`
@@ -43,6 +58,10 @@ export const Section = styled.div`
   border-radius: ${({ theme }) => theme.radii.lg};
   padding: 1.5rem;
   box-shadow: 0 0.0625rem 0.25rem ${({ theme }) => theme.colors.border};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 1.25rem;
+  }
 `
 
 export const SectionTitle = styled.h3`

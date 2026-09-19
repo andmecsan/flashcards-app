@@ -53,7 +53,7 @@ export const useDeckDetail = () => {
       queryClient.invalidateQueries({ queryKey: ['categories', id] })
       queryClient.invalidateQueries({ queryKey: ['deck-stats', id] })
       setDeleteId(null)
-      toast.success('Categoría eliminada')
+      toast.success('Temario eliminado')
     },
   })
 

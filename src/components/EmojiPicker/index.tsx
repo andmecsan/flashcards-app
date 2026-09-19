@@ -6,6 +6,7 @@ import type { EmojiPickerProps } from "./types";
 
 export const EmojiPicker = ({ value, onChange }: EmojiPickerProps) => {
   const [showPicker, setShowPicker] = useState(false);
+  const perLine = window.matchMedia("(max-width: 40rem)").matches ? 7 : 9;
 
   return (
     <Wrapper>
@@ -25,6 +26,7 @@ export const EmojiPicker = ({ value, onChange }: EmojiPickerProps) => {
             theme="light"
             previewPosition="none"
             skinTonePosition="none"
+            perLine={perLine}
           />
         </PickerWrapper>
       )}

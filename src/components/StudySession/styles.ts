@@ -7,6 +7,11 @@ export const Wrapper = styled.div`
   justify-content: center;
   padding: 2rem;
   background: ${({ theme }) => theme.colors.background};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 1rem;
+    align-items: flex-start;
+  }
 `
 
 export const CardContainer = styled.div`
@@ -14,6 +19,10 @@ export const CardContainer = styled.div`
   max-width: 44rem;
   min-height: 28rem;
   perspective: 1000px;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    min-height: 26rem;
+  }
 `
 
 export const CardInner = styled.div<{ $flipped: boolean }>`
@@ -50,6 +59,11 @@ export const CardBody = styled.div`
   justify-content: center;
   padding: 2rem;
   cursor: pointer;
+  overflow-y: auto;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 1.25rem;
+  }
 `
 
 export const CardLabel = styled.span`
@@ -67,19 +81,41 @@ export const CardText = styled.p`
   color: ${({ theme }) => theme.colors.text};
   text-align: center;
   line-height: 1.4;
+  overflow-wrap: anywhere;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 1.25rem;
+  }
 `
 
 export const CardFooter = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
   padding: 1.25rem 1.5rem;
   border-top: 1px solid ${({ theme }) => theme.colors.border};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 1rem;
+  }
 `
 
 export const RatingButtons = styled.div`
   display: flex;
   gap: 0.5rem;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    order: -1;
+    width: 100%;
+
+    > button {
+      flex: 1;
+      padding: 0.625rem 0.375rem;
+      font-size: 0.8125rem;
+    }
+  }
 `
 
 export const HintText = styled.p`
@@ -95,6 +131,11 @@ export const EmptyWrapper = styled.div`
   justify-content: center;
   gap: 1.5rem;
   padding: 4rem 2rem;
+  text-align: center;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 3rem 1rem;
+  }
 `
 
 export const EmptyTitle = styled.h2`

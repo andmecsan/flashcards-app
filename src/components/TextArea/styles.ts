@@ -26,6 +26,10 @@ export const StyledTextArea = styled.textarea<{ $hasError?: boolean }>`
   resize: none;
   height: 5rem;
 
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    font-size: 1rem;
+  }
+
   &:focus {
     outline: none;
     border-color: ${({ theme }) => theme.colors.primary};

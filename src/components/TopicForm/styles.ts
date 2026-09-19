@@ -4,6 +4,8 @@ export const SectionHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 `
 
 export const FormWrapper = styled.div`
@@ -18,10 +20,15 @@ export const CardRow = styled.div`
   display: flex;
   gap: 0.75rem;
   align-items: flex-start;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    gap: 0.5rem;
+  }
 `
 
 export const CardInputs = styled.div`
   flex: 1;
+  min-width: 0;
   flex-direction: column;
   display: flex;
   gap: 0.75rem;
@@ -47,6 +54,7 @@ export const RemoveButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
   margin-top: 1.75rem;
   transition: color 0.15s, background 0.15s;
 
@@ -72,6 +80,14 @@ export const Actions = styled.div`
   display: flex;
   gap: 0.75rem;
   justify-content: flex-end;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    flex-direction: column-reverse;
+
+    > * {
+      width: 100%;
+    }
+  }
 `
 
 export const ErrorMessage = styled.p`

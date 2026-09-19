@@ -48,7 +48,7 @@ export const DeckStats = ({ stats, deckId }: DeckStatsProps) => {
 
       <ProgressWrapper>
         <ProgressHeader>
-          <ProgressLabel>Progreso del mazo</ProgressLabel>
+          <ProgressLabel>Progreso de la asignatura</ProgressLabel>
         </ProgressHeader>
         <ProgressBar
           mastered={stats.mastered}

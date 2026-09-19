@@ -20,7 +20,7 @@ export const CreateDeckModal = ({
   );
 
   return (
-    <Modal title={isEditing ? "Editar mazo" : "Nuevo mazo"} onClose={onClose}>
+    <Modal title={isEditing ? "Editar asignatura" : "Nueva asignatura"} onClose={onClose}>
       <Form>
         <EmojiPicker
           value={form.watch("icon")}
@@ -39,7 +39,7 @@ export const CreateDeckModal = ({
           onChange={(color) => form.setValue("color", color)}
         />
         <Button $fullWidth onClick={handleSubmit}>
-          {isEditing ? "Guardar cambios" : "Crear mazo"}
+          {isEditing ? "Guardar cambios" : "Crear asignatura"}
         </Button>
       </Form>
     </Modal>

@@ -107,6 +107,11 @@ export const StyledButton = styled.button<Pick<ButtonProps, '$variant' | '$size'
     opacity: 0.5;
     cursor: not-allowed;
   }
+
+  @media (pointer: coarse) {
+    ${({ $iconOnly }) => $iconOnly && 'width: 2.5rem; height: 2.5rem;'}
+    ${({ $variant }) => $variant !== 'link' && 'min-height: 2.5rem;'}
+  }
 `
 export const Content = styled.span`
   display: flex;

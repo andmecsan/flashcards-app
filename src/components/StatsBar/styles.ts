@@ -11,6 +11,10 @@ export const Wrapper = styled.div`
 export const TopRow = styled.div`
   display: flex;
   border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    flex-direction: column;
+  }
 `
 
 export const StatSection = styled.div`
@@ -22,6 +26,15 @@ export const StatSection = styled.div`
 
   &:not(:last-child) {
     border-right: 1px solid ${({ theme }) => theme.colors.border};
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 1rem;
+
+    &:not(:last-child) {
+      border-right: none;
+      border-bottom: 1px solid ${({ theme }) => theme.colors.border};
+    }
   }
 `
 
@@ -59,6 +72,12 @@ export const BottomRow = styled.div`
   align-items: center;
   justify-content: space-between;
   padding: 0.875rem 1.25rem;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
 `
 
 export const ReviewInfo = styled.div`

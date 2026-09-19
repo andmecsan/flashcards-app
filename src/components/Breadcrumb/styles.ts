@@ -3,6 +3,7 @@ import styled from 'styled-components'
 export const Wrapper = styled.nav`
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 0.5rem;
   margin-bottom: 1.5rem;
   font-family: ${({ theme }) => theme.fonts.main};

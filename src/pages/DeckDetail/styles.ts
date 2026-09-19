@@ -6,14 +6,27 @@ export const Toolbar = styled.div`
   justify-content: space-between;
   gap: 1rem;
   margin-bottom: 2rem;
-  flex: 1;
   min-width: 0;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: 1.5rem;
+  }
 `
 
 export const ButtonGroup = styled.div`
   display: flex;
   align-items: center;
   gap: 0.75rem;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    flex-wrap: wrap;
+
+    > * {
+      flex: 1 1 auto;
+    }
+  }
 `
 
 export const Title = styled.h2`
@@ -27,11 +40,16 @@ export const Title = styled.h2`
 export const SearchWrapper = styled.div`
   flex: 1;
   max-width: 20rem;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    max-width: none;
+    order: 2;
+  }
 `
 
 export const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(15rem, 100%), 1fr));
   gap: 1.25rem;
 `
 

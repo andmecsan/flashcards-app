@@ -44,7 +44,7 @@ export const useDashboard = () => {
     queryClient.invalidateQueries({ queryKey: ['decks'] })
     queryClient.invalidateQueries({ queryKey: ['stats'] })
     setDeleteId(null)
-    toast.success('Mazo eliminado')
+    toast.success('Asignatura eliminada')
   },
   })
 

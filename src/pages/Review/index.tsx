@@ -9,7 +9,7 @@ export const Review = () => {
       cards={cards}
       loading={loading}
       emptyTitle="No hay tarjetas"
-      emptyMessage="Esta categoría no tiene tarjetas todavía."
+      emptyMessage="Este temario no tiene tarjetas todavía."
       completedTitle="¡Repaso completado!"
       showRatings={false}
       onRate={handleRate}

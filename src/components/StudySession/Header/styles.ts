@@ -4,7 +4,13 @@ export const CardHeader = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
   padding: 1.25rem 1.5rem;
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.mobile}) {
+    padding: 1rem;
+  }
 `
 
 export const Progress = styled.span`
