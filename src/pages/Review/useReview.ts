@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate, useSearchParams } from 'react-router-dom'
 import { api } from '../../services/api'
 import type { StudySessionCard } from '../../components/StudySession/types'
 import { useQueryClient } from '@tanstack/react-query'
@@ -8,16 +8,20 @@ export const useReview = () => {
   const queryClient = useQueryClient()
   const { deckId, categoryId } = useParams<{ deckId: string; categoryId: string }>()
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const tagId = searchParams.get('tag_id')
 
   const [cards, setCards] = useState<StudySessionCard[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    api.get(`/categories/${categoryId}/review_cards`)
+    api.get(`/categories/${categoryId}/review_cards`, {
+      params: tagId ? { tag_id: tagId } : {},
+    })
       .then(res => setCards(res.data))
       .catch(err => console.error('Error cargando tarjetas:', err))
       .finally(() => setLoading(false))
-  }, [categoryId])
+  }, [categoryId, tagId])
 
   const handleRate = () => {}
 
@@ -28,5 +32,5 @@ const handleExit = () => {
   navigate(`/decks/${deckId}`)
 }
 
-  return { cards, loading, handleRate, handleExit }
+  return { cards, loading, handleRate, handleExit, tagId }
 }
