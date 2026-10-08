@@ -55,7 +55,12 @@ export const Content = styled.div<{ $variant: 'default' | 'stacked' }>`
   overflow: hidden;
   border-radius: ${({ theme }) => theme.radii.lg};
 
+  /* En una fila de la cuadrícula todas las tarjetas miden lo mismo, con
+     la última sección (p. ej. la barra de progreso) pegada abajo. */
   ${({ $variant, theme }) => $variant === 'default' && css`
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     background: ${theme.colors.surface};
   `}
 
@@ -67,6 +72,7 @@ export const Content = styled.div<{ $variant: 'default' | 'stacked' }>`
 export const Header = styled.div<{ $color?: string }>`
   background: ${({ $color, theme }) => $color || theme.colors.primary};
   height: 8rem;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -80,7 +86,16 @@ export const Body = styled.div<{ $variant: 'default' | 'stacked' }>`
   display: flex;
   gap: .5rem;
   flex-direction: column;
-    ${({ $variant }) => $variant === 'stacked' && css`
+
+  ${({ $variant }) => $variant === 'default' && css`
+    flex: 1;
+
+    > :last-child {
+      margin-top: auto;
+    }
+  `}
+
+  ${({ $variant }) => $variant === 'stacked' && css`
     min-height: 12rem;
     justify-content: center;
     align-items: center;

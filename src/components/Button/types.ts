@@ -9,4 +9,7 @@ export interface ButtonProps {
   disabled?: boolean
   $iconOnly?: boolean
   type?: 'button' | 'submit'
+  title?: string
+  'aria-label'?: string
+  'aria-pressed'?: boolean
 }

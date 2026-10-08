@@ -10,4 +10,7 @@ export interface CardProps {
   onClick?: () => void
   onDelete?: () => void
   onEdit?: () => void
+  onMove?: () => void
+  isFavorite?: boolean
+  onToggleFavorite?: () => void
 }

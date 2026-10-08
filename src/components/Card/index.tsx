@@ -1,4 +1,4 @@
-import { Trash2, Pencil } from "lucide-react";
+import { Trash2, Pencil, Star, FolderInput } from "lucide-react";
 import { Button } from "../Button";
 import {
   Wrapper,
@@ -24,8 +24,11 @@ export const Card = ({
   onClick,
   onDelete,
   onEdit,
+  onMove,
+  isFavorite = false,
+  onToggleFavorite,
 }: CardProps) => {
-  const hasActions = !!onDelete || !!onEdit;
+  const hasActions = !!onDelete || !!onEdit || !!onMove || !!onToggleFavorite;
 
   const handleAction = (e: React.MouseEvent, handler: () => void) => {
     e.stopPropagation();
@@ -37,12 +40,33 @@ export const Card = ({
       <Content $variant={$variant}>
         {hasActions && (
           <Actions $variant={$variant}>
+            {onToggleFavorite && (
+              <Button
+                $variant="overlay"
+                $iconOnly
+                icon={<Star size={14} fill={isFavorite ? "currentColor" : "none"} />}
+                aria-label={isFavorite ? "Quitar de favoritas" : "Marcar como favorita"}
+                aria-pressed={isFavorite}
+                title={isFavorite ? "Quitar de favoritas" : "Marcar como favorita"}
+                onClick={(e) => handleAction(e, onToggleFavorite)}
+              />
+            )}
             {onDelete && (
               <Button
                 $variant="overlay"
                 $iconOnly
                 icon={<Trash2 size={14} />}
                 onClick={(e) => handleAction(e, onDelete)}
+              />
+            )}
+            {onMove && (
+              <Button
+                $variant="overlay"
+                $iconOnly
+                icon={<FolderInput size={14} />}
+                aria-label="Mover a otra asignatura"
+                title="Mover a otra asignatura"
+                onClick={(e) => handleAction(e, onMove)}
               />
             )}
             {onEdit && (
