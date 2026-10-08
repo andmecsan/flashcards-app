@@ -1,22 +1,26 @@
-import { Search, Plus } from "lucide-react";
+import { Search, Plus, Star } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Layout } from "../../components/Layout";
 import { Input } from "../../components/Input";
 import { Button } from "../../components/Button";
 import { Card } from "../../components/Card";
 import { StatsBar } from "../../components/StatsBar";
+import { MasteryClouds } from "../../components/MasteryClouds";
 import { CardSkeleton } from "../../components/Skeleton";
 import { ConfirmModal } from "../../components/ConfirmModal";
 import { CreateDeckModal } from "../CreateDeckModal";
 import { useDashboard } from "./useDashboard";
-import { Toolbar, SearchWrapper, Title, Grid, EmptyState } from "./styles";
+import { Toolbar, SearchWrapper, Title, Grid, EmptyState, Footer } from "./styles";
 import { ProgressBar } from "../../components/ProgressBar";
 import { Pagination } from "../../components/Pagination";
+import { DeckChips } from "../../components/TagChip";
 
 export const Dashboard = () => {
   const {
     decks,
     stats,
+    mastery,
+    masteryTags,
     search,
     setSearch,
     loading,
@@ -34,6 +38,9 @@ export const Dashboard = () => {
     page,
     totalPages,
     handlePageChange,
+    onlyFavorites,
+    handleToggleOnlyFavorites,
+    handleToggleFavorite,
   } = useDashboard();
   const navigate = useNavigate();
 
@@ -43,6 +50,21 @@ export const Dashboard = () => {
         <StatsBar
           stats={stats}
           onStudy={(deckId) => navigate(`/study/${deckId}`)}
+        />
+      )}
+
+      {mastery && mastery.total_reviews > 0 && (
+        <MasteryClouds
+          data={mastery}
+          tagData={masteryTags}
+          onSelect={(entry, group) => {
+            if (entry.deck_id === null) return;
+            navigate(
+              group === "tag"
+                ? `/decks/${entry.deck_id}?tag_id=${entry.id}`
+                : `/decks/${entry.deck_id}`,
+            );
+          }}
         />
       )}
 
@@ -56,6 +78,14 @@ export const Dashboard = () => {
             icon={<Search size={18} />}
           />
         </SearchWrapper>
+        <Button
+          $variant={onlyFavorites ? "primary" : "ghost"}
+          icon={<Star size={18} fill={onlyFavorites ? "currentColor" : "none"} />}
+          aria-pressed={onlyFavorites}
+          onClick={handleToggleOnlyFavorites}
+        >
+          Favoritas
+        </Button>
         <Button icon={<Plus size={18} />} onClick={() => setShowModal(true)}>
           Añadir asignatura
         </Button>
@@ -72,21 +102,22 @@ export const Dashboard = () => {
               $highlighted={deck.id === highlightedId}
               key={deck.id}
               title={deck.name}
-              subtitle={`${deck.card_count} tarjetas`}
-              badge={
-                deck.due_count > 0 ? `${deck.due_count} pendientes` : undefined
-              }
               icon={<span>{deck.icon}</span>}
               headerColor={deck.color}
               onClick={() => navigate(`/decks/${deck.id}`)}
               onDelete={() => handleDelete(deck.id)}
               onEdit={() => setEditDeck(deck)}
+              isFavorite={deck.favorite}
+              onToggleFavorite={() => handleToggleFavorite(deck)}
             >
-              <ProgressBar
-                mastered={deck.mastered}
-                inProgress={deck.in_progress}
-                newCards={deck.new_cards}
-              />
+              <Footer>
+                <DeckChips tags={[deck.area, deck.level, deck.course]} pending={deck.due_count} />
+                <ProgressBar
+                  mastered={deck.mastered}
+                  inProgress={deck.in_progress}
+                  newCards={deck.new_cards}
+                />
+              </Footer>
             </Card>
           ))}
         </Grid>
@@ -95,7 +126,9 @@ export const Dashboard = () => {
           <p>
             {search
               ? "No hay asignaturas que coincidan"
-              : "Aún no tienes asignaturas. ¡Crea la primera!"}
+              : onlyFavorites
+                ? "Aún no tienes asignaturas favoritas. Pulsa la estrella de una asignatura para añadirla."
+                : "Aún no tienes asignaturas. ¡Crea la primera!"}
           </p>
         </EmptyState>
       )}

@@ -59,3 +59,9 @@ export const ModalForm = styled.div`
   flex-direction: column;
   gap: 1rem;
 `
+/** Chips y barra de progreso: el contenedor que la tarjeta pega abajo. */
+export const Footer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`
