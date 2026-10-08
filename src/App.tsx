@@ -14,6 +14,7 @@ import { CreateTopic } from "./pages/CreateTopic";
 import { Study } from "./pages/Study";
 import { Review } from "./pages/Review";
 import { Profile } from "./pages/Profile";
+import { MyTags } from "./pages/MyTags";
 import { FAQ } from "./pages/FAQ";
 import { EditTopic } from "./pages/EditTopic";
 
@@ -57,6 +58,7 @@ function App() {
             <Route element={<ProtectedRoute />}>
               <Route path="/faq" element={<FAQ />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/tags" element={<MyTags />} />
               <Route path="/" element={<Dashboard />} />
               <Route path="/decks/:id" element={<DeckDetail />} />
               <Route path="/decks/:deckId/new-topic" element={<CreateTopic />} />

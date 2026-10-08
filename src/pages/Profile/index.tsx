@@ -112,6 +112,16 @@ export const Profile = () => {
           </Form>
         </Section>
 
+        <Section>
+          <SectionTitle>Etiquetas</SectionTitle>
+          <DangerText>
+            Renombra, fusiona o elimina las etiquetas que usas en tus tarjetas.
+          </DangerText>
+          <Button $variant="secondary" onClick={() => navigate("/tags")}>
+            Gestionar mis etiquetas
+          </Button>
+        </Section>
+
         <DangerSection>
           <SectionTitle>Zona peligrosa</SectionTitle>
           <DangerText>
