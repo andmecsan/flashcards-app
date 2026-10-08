@@ -1,8 +1,12 @@
 import { useRef } from "react";
+import { Controller } from "react-hook-form";
 import { Plus, Trash2, Sparkles } from "lucide-react";
 import { Layout } from "../Layout";
 import { Input } from "../Input";
 import { TextArea } from "../TextArea";
+import { DifficultySelect } from "../DifficultySelect";
+import { TagInput } from "../TagInput";
+import { usePersonalTags } from "../../hooks/useTags";
 import { Button } from "../Button";
 import { Loader } from "../Loader";
 import type { TopicFormProps } from "./types";
@@ -34,6 +38,7 @@ export const TopicForm = ({
   handleGenerateFromPdf,
 }: TopicFormProps) => {
   const fileRef = useRef<HTMLInputElement>(null);
+  const { data: personalTags = [] } = usePersonalTags();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -69,6 +74,18 @@ export const TopicForm = ({
             required: "El nombre es obligatorio",
           })}
           error={form.formState.errors.name?.message || serverError}
+        />
+
+        <Controller
+          control={form.control}
+          name="difficulty"
+          render={({ field }) => (
+            <DifficultySelect
+              label="Dificultad (opcional)"
+              value={field.value ?? ""}
+              onChange={field.onChange}
+            />
+          )}
         />
 
         <Divider />
@@ -114,6 +131,18 @@ export const TopicForm = ({
                   required: "Obligatorio",
                 })}
                 error={form.formState.errors.cards?.[index]?.back?.message}
+              />
+              <Controller
+                control={form.control}
+                name={`cards.${index}.tags`}
+                render={({ field: tagsField }) => (
+                  <TagInput
+                    label="Etiquetas (opcional)"
+                    value={tagsField.value ?? []}
+                    onChange={tagsField.onChange}
+                    suggestions={personalTags.map((tag) => tag.name)}
+                  />
+                )}
               />
             </CardInputs>
             <RemoveButton onClick={() => handleRemoveCard(index)}>

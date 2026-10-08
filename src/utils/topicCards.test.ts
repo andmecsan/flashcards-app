@@ -20,6 +20,18 @@ describe('getValidTopicCards', () => {
     expect(form.setError).not.toHaveBeenCalled()
   })
 
+  it('conserva el cardId de las tarjetas ya guardadas', () => {
+    const form = fakeForm()
+    const cards = [
+      { cardId: 7, front: 'Pregunta', back: 'Respuesta' },
+      { front: 'Nueva', back: 'Tarjeta' },
+    ]
+
+    const result = getValidTopicCards(form, cards)
+
+    expect(result).toEqual(cards)
+  })
+
   it('rechaza y marca error si una tarjeta tiene solo pregunta o solo respuesta', () => {
     const form = fakeForm()
     const cards = [{ front: 'Pregunta sin respuesta', back: '' }]

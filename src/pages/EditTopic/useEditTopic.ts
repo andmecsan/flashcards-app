@@ -5,6 +5,7 @@ import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query'
 import { api } from '../../services/api'
 import { getApiErrorMessage } from '../../utils/apiError'
 import { getValidTopicCards } from '../../utils/topicCards'
+import { buildTopicPayload } from '../../utils/topicPayload'
 import type { CreateTopicForm, CardItem } from '../../components/TopicForm/types'
 import type { Deck } from '../Dashboard/types'
 import type { Category } from '../DeckDetail/types'
@@ -50,8 +51,9 @@ export const useEditTopic = () => {
     if (category && existingCards) {
       form.reset({
         name: category.name,
+        difficulty: category.difficulty ?? '',
         cards: existingCards.length > 0
-          ? existingCards.map(c => ({ front: c.front, back: c.back }))
+          ? existingCards.map(c => ({ cardId: c.id, front: c.front, back: c.back, tags: c.tags ?? [] }))
           : [{ front: '', back: '' }],
       })
     }
@@ -59,14 +61,13 @@ export const useEditTopic = () => {
 
   const updateMutation = useMutation({
     mutationFn: (data: CreateTopicForm) =>
-      api.patch(`/categories/${categoryId}/update_topic`, {
-        name: data.name,
-        cards: data.cards.filter(c => c.front.trim() && c.back.trim()),
-      }),
+      api.patch(`/categories/${categoryId}/update_topic`, buildTopicPayload(data, { withIds: true })),
     onSuccess: () => {
     queryClient.invalidateQueries({ queryKey: ['categories', deckId] })
     queryClient.invalidateQueries({ queryKey: ['category', categoryId] })
     queryClient.invalidateQueries({ queryKey: ['cards', categoryId] })
+    queryClient.invalidateQueries({ queryKey: ['tags'] })
+    queryClient.invalidateQueries({ queryKey: ['deck-stats', deckId] })
     toast.success('Tema actualizado correctamente')
     navigate(`/decks/${deckId}`)
     },

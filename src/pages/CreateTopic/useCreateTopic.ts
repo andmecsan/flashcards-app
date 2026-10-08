@@ -5,6 +5,7 @@ import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query'
 import { api } from '../../services/api'
 import { getApiErrorMessage } from '../../utils/apiError'
 import { getValidTopicCards } from '../../utils/topicCards'
+import { buildTopicPayload } from '../../utils/topicPayload'
 import type { CreateTopicForm } from '../../components/TopicForm/types'
 import type { Deck } from '../Dashboard/types'
 import toast from 'react-hot-toast'
@@ -25,7 +26,8 @@ export const useCreateTopic = () => {
   const form = useForm<CreateTopicForm>({
     defaultValues: {
       name: '',
-      cards: [{ front: '', back: '' }],
+      difficulty: '',
+      cards: [{ front: '', back: '', tags: [] }],
     },
   })
 
@@ -36,12 +38,11 @@ export const useCreateTopic = () => {
 
   const createMutation = useMutation({
     mutationFn: (data: CreateTopicForm) =>
-      api.post(`/decks/${deckId}/create_topic`, {
-        name: data.name,
-        cards: data.cards.filter(c => c.front.trim() && c.back.trim()),
-      }),
+      api.post(`/decks/${deckId}/create_topic`, buildTopicPayload(data, { withIds: false })),
       onSuccess: () => {
     queryClient.invalidateQueries({ queryKey: ['categories', deckId] })
+    queryClient.invalidateQueries({ queryKey: ['tags'] })
+    queryClient.invalidateQueries({ queryKey: ['deck-stats', deckId] })
     toast.success('Tema creado correctamente')
     navigate(`/decks/${deckId}`)
   },
