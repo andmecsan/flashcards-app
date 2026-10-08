@@ -3,10 +3,18 @@ import { useForm } from 'react-hook-form'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { api } from '../../services/api'
 import { getApiErrorMessage } from '../../utils/apiError'
-import type { DeckFormData } from './types'
+import type { CreateDeckModalProps, DeckFormData } from './types'
 import toast from 'react-hot-toast'
 
-export const useCreateDeck = (onClose: () => void, onCreated?: (id: number) => void, deck?: { id: number; name: string; icon: string; color: string }) => {
+/** Cuerpo del API: el área, nivel y curso vacíos se envían como '' para quitarlos. */
+export const toPayload = ({ areaId, levelId, courseId, ...rest }: DeckFormData) => ({
+  ...rest,
+  area_id: areaId,
+  level_id: levelId,
+  course_id: courseId,
+})
+
+export const useCreateDeck = (onClose: () => void, onCreated?: (id: number) => void, deck?: CreateDeckModalProps['deck']) => {
   const queryClient = useQueryClient()
   const isEditing = !!deck
   const [serverError, setServerError] = useState('')
@@ -16,11 +24,14 @@ export const useCreateDeck = (onClose: () => void, onCreated?: (id: number) => v
       name: deck?.name || '',
       icon: deck?.icon || '📚',
       color: deck?.color || '#7C3AED',
+      areaId: deck?.area ? String(deck.area.id) : '',
+      levelId: deck?.level ? String(deck.level.id) : '',
+      courseId: deck?.course ? String(deck.course.id) : '',
     },
   })
 
   const createMutation = useMutation({
-    mutationFn: (data: DeckFormData) => api.post('/decks', { deck: data }),
+    mutationFn: (data: DeckFormData) => api.post('/decks', { deck: toPayload(data) }),
    onSuccess: (res) => {
     queryClient.invalidateQueries({ queryKey: ['decks'] })
     queryClient.invalidateQueries({ queryKey: ['stats'] })
@@ -37,7 +48,7 @@ export const useCreateDeck = (onClose: () => void, onCreated?: (id: number) => v
   })
 
   const updateMutation = useMutation({
-    mutationFn: (data: DeckFormData) => api.patch(`/decks/${deck?.id}`, { deck: data }),
+    mutationFn: (data: DeckFormData) => api.patch(`/decks/${deck?.id}`, { deck: toPayload(data) }),
     onSuccess: () => {
     queryClient.invalidateQueries({ queryKey: ['decks'] })
     queryClient.invalidateQueries({ queryKey: ['stats'] })

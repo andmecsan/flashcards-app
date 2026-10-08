@@ -7,6 +7,7 @@ import { useCreateDeck } from "./useCreateDeck";
 import type { CreateDeckModalProps } from "./types";
 import { Form } from "./styles";
 import { EmojiPicker } from "../../components/EmojiPicker";
+import { DeckTags } from "./DeckTags";
 
 export const CreateDeckModal = ({
   onClose,
@@ -38,6 +39,7 @@ export const CreateDeckModal = ({
           value={form.watch("color")}
           onChange={(color) => form.setValue("color", color)}
         />
+        <DeckTags form={form} />
         <Button $fullWidth onClick={handleSubmit}>
           {isEditing ? "Guardar cambios" : "Crear asignatura"}
         </Button>
